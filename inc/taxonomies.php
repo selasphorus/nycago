@@ -341,7 +341,7 @@ function nycago_register_taxonomy_person_role() {
         'query_var'         => true,
         'rewrite'           => [ 'slug' => 'person_role' ],
     );
-    register_taxonomy( 'person_role', [ 'person', 'event', 'event_program' ], $args );
+    register_taxonomy( 'person_role', [ 'event', 'event_program' ], $args ); // 'person', 
 }
 add_action( 'init', 'nycago_register_taxonomy_person_role' );
 

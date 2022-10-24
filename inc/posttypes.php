@@ -84,7 +84,7 @@ function nycago_register_post_type_person() {
 	 	'menu_icon'          => 'dashicons-groups',
         'menu_position'      => null,
         'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields', 'revisions', 'page-attributes' ), //
-		'taxonomies' => array( 'people_category', 'person_role', 'admin_tag' ),
+		'taxonomies' => array( 'people_category', 'admin_tag' ), // , 'person_role'
 		'show_in_rest' => false, // i.e. false = use classic, not block editor
 	);
 
