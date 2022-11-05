@@ -334,48 +334,4 @@ function nycago_register_post_type_source() {
 }
 add_action( 'init', 'nycago_register_post_type_source' );
 
-/*** MUSIC LIBRARY ***/
-
-// Repertoire, aka Musical Work
-function nycago_register_post_type_repertoire() {
-
-	$labels = array(
-		'name' => __( 'Musical Works', 'nycago' ),
-		'singular_name' => __( 'Musical Work', 'nycago' ),
-		'add_new' => __( 'New Musical Work', 'nycago' ),
-		'add_new_item' => __( 'Add New Musical Work', 'nycago' ),
-		'edit_item' => __( 'Edit Musical Work', 'nycago' ),
-		'new_item' => __( 'New Musical Work', 'nycago' ),
-		'view_item' => __( 'View Musical Works', 'nycago' ),
-		'search_items' => __( 'Search Musical Works', 'nycago' ),
-		'not_found' =>  __( 'No Musical Works Found', 'nycago' ),
-		'not_found_in_trash' => __( 'No Musical Works found in Trash', 'nycago' ),
-	);
-	
-	$args = array(
-		'labels' => $labels,
-	 	'public' => true,
-        'publicly_queryable' => true,
-        'show_ui'            => true,
-        'show_in_menu'       => true,
-        'query_var'          => true,
-        'rewrite'            => array( 'slug' => 'repertoire' ),
-        //'capability_type' => array('musicwork', 'repertoire'),
-        'map_meta_cap'       => true,
-        'has_archive'        => true,
-        'hierarchical'       => false,
-	 	'menu_icon'          => 'dashicons-book',
-        'menu_position'      => null,
-        'supports'           => array( 'title', 'author', 'thumbnail', 'excerpt', 'custom-fields', 'revisions', 'page-attributes' ), //'editor', 
-		'taxonomies' => array( 'repertoire_category', 'occasion', 'season', 'post_tag', 'admin_tag' ),
-		'show_in_rest' => false, // i.e. false = use classic, not block editor
-	);
-
-	register_post_type( 'repertoire', $args );
-	
-}
-add_action( 'init', 'nycago_register_post_type_repertoire' );
-
-
-
 ?>
