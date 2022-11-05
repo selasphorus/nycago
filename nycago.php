@@ -29,14 +29,14 @@ $plugin_path = plugin_dir_path( __FILE__ );
 // Include sub-files
 // TODO: make them required? Otherwise dependencies may be an issue.
 // TODO: maybe: convert to classes/methods approach??
-
+/* -- SEE SDG
 $includes = array( 'posttypes', 'taxonomies' );
 
 foreach ( $includes as $inc ) {
     $filepath = $plugin_path . 'inc/'.$inc.'.php'; 
     if ( file_exists($filepath) ) { include_once( $filepath ); } else { echo "no $filepath found"; }
 }
-
+*/
 /* +~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+ */
 
 // Enqueue scripts and styles -- WIP
