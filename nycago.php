@@ -30,7 +30,7 @@ $plugin_path = plugin_dir_path( __FILE__ );
 // TODO: make them required? Otherwise dependencies may be an issue.
 // TODO: maybe: convert to classes/methods approach??
 
-$includes = array( 'posttypes', 'taxonomies' ); // , 'events', 'sermons'
+$includes = array( 'posttypes', 'taxonomies' );
 
 foreach ( $includes as $inc ) {
     $filepath = $plugin_path . 'inc/'.$inc.'.php'; 

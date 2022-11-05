@@ -8,91 +8,6 @@ if ( !function_exists( 'add_action' ) ) {
 	exit;
 }
 
-/*** GENERAL/ADMIN ***/
-
-// Admin Note
-function nycago_register_post_type_admin_note() {
-
-	$labels = array(
-		'name' => __( 'Admin Notes', 'nycago' ),
-		'singular_name' => __( 'Admin Note', 'nycago' ),
-		'add_new' => __( 'New Admin Note', 'nycago' ),
-		'add_new_item' => __( 'Add New Admin Note', 'nycago' ),
-		'edit_item' => __( 'Edit Admin Note', 'nycago' ),
-		'new_item' => __( 'New Admin Note', 'nycago' ),
-		'view_item' => __( 'View Admin Notes', 'nycago' ),
-		'search_items' => __( 'Search Admin Notes', 'nycago' ),
-		'not_found' =>  __( 'No Admin Notes Found', 'nycago' ),
-		'not_found_in_trash' => __( 'No Admin Notes found in Trash', 'nycago' ),
-	);
-	
-	$args = array(
-		'labels' => $labels,
-	 	'public' => true,
-        'publicly_queryable' => true,
-        'show_ui'            => true,
-        'show_in_menu'       => true,
-        'query_var'          => true,
-        'rewrite'            => array( 'slug' => 'admin_note' ),
-        'capability_type' => array('admin_note', 'admin_notes'),
-        'map_meta_cap'       => true,
-        'has_archive'        => true,
-        'hierarchical'       => false,
-	 	'menu_icon'          => 'dashicons-info-outline',
-        'menu_position'      => null,
-        'supports'           => array( 'title', 'author', 'editor', 'thumbnail', 'excerpt', 'custom-fields', 'revisions', 'page-attributes' ), //
-		'taxonomies' => array( 'adminnote_category', 'admin_tag', 'data_table', 'query_tag', 'admin_tag' ),
-		'show_in_rest' => false, // i.e. false = use classic, not block editor
-	);
-
-	register_post_type( 'admin_note', $args );
-	
-}
-add_action( 'init', 'nycago_register_post_type_admin_note' );
-
-
-/*** PEOPLE ***/
-
-// Person
-function nycago_register_post_type_person() {
-
-	$labels = array(
-		'name' => __( 'People', 'nycago' ),
-		'singular_name' => __( 'Person', 'nycago' ),
-		'add_new' => __( 'New Person', 'nycago' ),
-		'add_new_item' => __( 'Add New Person', 'nycago' ),
-		'edit_item' => __( 'Edit Person', 'nycago' ),
-		'new_item' => __( 'New Person', 'nycago' ),
-		'view_item' => __( 'View Person', 'nycago' ),
-		'search_items' => __( 'Search People', 'nycago' ),
-		'not_found' =>  __( 'No People Found', 'nycago' ),
-		'not_found_in_trash' => __( 'No People found in Trash', 'nycago' ),
-	);
-	
-	$args = array(
-		'labels' => $labels,
-	 	'public' => true,
-        'publicly_queryable' => true,
-        'show_ui'            => true,
-        'show_in_menu'       => true,
-        'query_var'          => true,
-        'rewrite'            => array( 'slug' => 'person' ),
-        'capability_type' => array('person', 'people'),
-        'map_meta_cap'       => true,
-        'has_archive'        => true,
-        'hierarchical'       => false,
-	 	'menu_icon'          => 'dashicons-groups',
-        'menu_position'      => null,
-        'supports'           => array( 'title', 'editor', 'author', 'thumbnail', 'excerpt', 'custom-fields', 'revisions', 'page-attributes' ), //
-		'taxonomies' => array( 'people_category', 'admin_tag' ), // , 'person_role'
-		'show_in_rest' => false, // i.e. false = use classic, not block editor
-	);
-
-	register_post_type( 'person', $args );
-	
-}
-add_action( 'init', 'nycago_register_post_type_person' );
-
 /*** VENUES ***/
 
 // Venue
@@ -460,47 +375,6 @@ function nycago_register_post_type_repertoire() {
 	
 }
 add_action( 'init', 'nycago_register_post_type_repertoire' );
-
-/*** SERMONS ***/
-
-function nycago_register_post_type_sermon() {
-
-	$labels = array(
-		'name' => __( 'Sermons', 'nycago' ),
-		'singular_name' => __( 'Sermon', 'nycago' ),
-		'add_new' => __( 'New Sermon', 'nycago' ),
-		'add_new_item' => __( 'Add New Sermon', 'nycago' ),
-		'edit_item' => __( 'Edit Sermon', 'nycago' ),
-		'new_item' => __( 'New Sermon', 'nycago' ),
-		'view_item' => __( 'View Sermons', 'nycago' ),
-		'search_items' => __( 'Search Sermons', 'nycago' ),
-		'not_found' =>  __( 'No Sermons Found', 'nycago' ),
-		'not_found_in_trash' => __( 'No Sermons found in Trash', 'nycago' ),
-	);
-	
-	$args = array(
-		'labels' => $labels,
-	 	'public' => true,
-        'publicly_queryable' => true,
-        'show_ui'            => true,
-        'show_in_menu'       => true,
-        'query_var'          => true,
-        'rewrite'            => array( 'slug' => 'sermon' ),
-        'capability_type' => array('sermon', 'sermons'),
-        'map_meta_cap'       => true,
-        'has_archive'        => true,
-        'hierarchical'       => false,
-	 	'menu_icon'          => 'dashicons-welcome-write-blog',
-        'menu_position'      => null,
-        'supports'           => array( 'title', 'author', 'thumbnail', 'excerpt', 'custom-fields', 'revisions', 'page-attributes' ), //'editor', 
-		'taxonomies' => array( 'admin_tag' ), //'people_category', 'people_tag', 
-		'show_in_rest' => true,    
-	);
-
-	register_post_type( 'sermon', $args );
-	
-}
-//add_action( 'init', 'nycago_register_post_type_sermon' );
 
 
 
