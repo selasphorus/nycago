@@ -123,8 +123,9 @@ function extract_html ( $atts = [] ) {
 			$headers = $response['headers']; // array of http header lines
 			$body = $response['body']; // use the content
 			
-			//$html_content .= "<pre>";
+			$html_content .= "<pre>";
 			$html_content .= $headers;
+			$html_content .= "</pre>";
 			$html_content .= $body;
 			
 		}
