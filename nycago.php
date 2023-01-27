@@ -124,7 +124,7 @@ function extract_html ( $atts = [] ) {
 			$body = $response['body']; // use the content
 			
 			$html_content .= "<pre>";
-			$html_content .= $headers;
+			$html_content .= print_r($headers, true);
 			$html_content .= "</pre>";
 			$html_content .= $body;
 			
