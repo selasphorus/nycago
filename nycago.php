@@ -85,4 +85,50 @@ function nycago_meta_tags() {
     
 }
 
+// Function to extract HTML content from file saved to Media Library
+function extract_html_local ( $attachment_id ) {
+
+	$html_content = "";
+	
+	/*
+	// @var array|WP_Error $response
+	$response = wp_remote_get( 'http://www.example.com/index.html' );
+
+	if ( is_array( $response ) && ! is_wp_error( $response ) ) {
+		$headers = $response['headers']; // array of http header lines
+		$body    = $response['body']; // use the content
+	}
+	*/
+	
+	return $html_content;
+	
+}
+
+// Function to extract HTML content from url
+function extract_html ( $atts = [] ) {
+
+	$args = shortcode_atts( 
+        array(
+            'url'   => null
+        ), $atts );
+	$url = $args['url'];
+	
+	$html_content = "";
+	
+	if ( ! empty($url) ) { 
+		// @var array|WP_Error $response
+		$response = wp_remote_get( $url);
+
+		if ( is_array( $response ) && ! is_wp_error( $response ) ) {
+			$headers = $response['headers']; // array of http header lines
+			$html_content = $response['body']; // use the content
+		}
+	}
+	
+	return $html_content;
+	
+}
+
+add_shortcode( 'show_file_content', 'extract_html' );
+
 ?>
