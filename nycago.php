@@ -230,22 +230,28 @@ function process_newsletters ( $atts = [] ) {
 		if ( ! empty($url) ) { 
 	
 			$info .= "url: ".$url."<br />";
+			$ext = pathinfo($url,PATHINFO_EXTENSION);
+			$info .= "ext: ".$ext."<br />";
 			
 			// TODO: check to make sure it's an AGO url before proceeding
-		
-			// @var array|WP_Error $response
-			$response = wp_remote_get( $url);
+			
+			// Proceed only if this is an html url, not a link to a PDF file
+			if ( $ext == "html" ) { 
+			
+				// @var array|WP_Error $response
+				$response = wp_remote_get( $url);
 
-			if ( is_array( $response ) && ! is_wp_error( $response ) ) {
+				if ( is_array( $response ) && ! is_wp_error( $response ) ) {
 			
-				$headers = $response['headers']; // array of http header lines
-				$body = $response['body']; // use the content
+					$headers = $response['headers']; // array of http header lines
+					$body = $response['body']; // use the content
 			
-				$html_content .= "<pre>";
-				$html_content .= print_r($headers, true);
-				$html_content .= "</pre>";
-				$html_content .= $body;
+					$html_content .= "<pre>";
+					$html_content .= print_r($headers, true);
+					$html_content .= "</pre>";
+					$html_content .= $body;
 			
+				}			
 			}
 		}
 		
