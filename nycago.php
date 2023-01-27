@@ -121,7 +121,12 @@ function extract_html ( $atts = [] ) {
 
 		if ( is_array( $response ) && ! is_wp_error( $response ) ) {
 			$headers = $response['headers']; // array of http header lines
-			$html_content = $response['body']; // use the content
+			$body = $response['body']; // use the content
+			
+			//$html_content .= "<pre>";
+			$html_content .= $headers;
+			$html_content .= $body;
+			
 		}
 	}
 	
