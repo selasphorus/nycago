@@ -105,6 +105,7 @@ function extract_html_local ( $attachment_id ) {
 }
 
 // Function to extract HTML content from url
+add_shortcode( 'show_file_content', 'extract_html' );
 function extract_html ( $atts = [] ) {
 
 	$args = shortcode_atts( 
@@ -116,6 +117,9 @@ function extract_html ( $atts = [] ) {
 	$html_content = "";
 	
 	if ( ! empty($url) ) { 
+	
+		// TODO: check to make sure it's an AGO url before proceeding
+		
 		// @var array|WP_Error $response
 		$response = wp_remote_get( $url);
 
@@ -135,6 +139,130 @@ function extract_html ( $atts = [] ) {
 	
 }
 
-add_shortcode( 'show_file_content', 'extract_html' );
+// Function to process newsletters to add content from old html
+add_shortcode( 'process_newsletters', 'process_newsletters' );
+function process_newsletters ( $atts = [] ) {
+
+	$current_user = wp_get_current_user();
+    if ( $current_user->user_login != 'birdhive@gmail.com' ) {
+    	return "You are not authorized to run this operation.<br />";    
+    }
+    
+	$info = "";
+    $indent = "&nbsp;&nbsp;&nbsp;&nbsp;";
+
+	$a = shortcode_atts( array(
+        'testing' => true,
+        'verbose' => false,
+        'id' => null,
+        'year' => date('Y'),
+        'num_posts' => 10,
+        'admin_tag_slug' => 'programmatically-updated',
+        'orderby' => 'title',
+        'order' => 'ASC',
+        'meta_key' => null
+    ), $atts );
+	
+    $testing = $a['testing'];
+    $verbose = $a['verbose'];
+    $num_posts = (int) $a['num_posts'];
+    $year = get_query_var( 'y' );
+    if ( $year == "" ) { $year = $a['year']; } //$year = get_query_var( 'year' ) ? get_query_var( 'year' ) : $a['year'];
+    $orderby = $a['orderby'];
+    $order = $a['order'];
+    $meta_key = $a['meta_key'];
+    $admin_tag_slug = $a['admin_tag_slug'];
+    
+    // Set up the WP query args
+	$args = array(
+		'post_type' => 'newsletter',
+		'post_status' => 'publish',
+        'posts_per_page' => $num_posts,
+        /*'meta_query' => array(
+            'relation' => 'AND',
+            array(
+                'key'   => "date_type", 
+                'value' => 'variable',
+            ),
+            array(
+                'key'   => "date_calculation",
+                'compare' => 'EXISTS'
+            )
+        ),*/
+        'orderby'	=> $orderby,
+        'order'	=> $order,
+	);
+    
+    //if ( $a['id'] !== null ) { $args['p'] = $a['id']; }
+    if ( $a['id'] !== null ) { $args['post__in'] = explode(', ', $a['id']); }
+    if ( $a['meta_key'] !== null ) { $args['meta_key'] = $meta_key; }
+	
+	// Run the query
+	$arr_posts = new WP_Query( $args );
+    $posts = $arr_posts->posts;
+    
+    $info .= ">>> process_newsletters <<<<br />";
+    $info .= "testing: $testing; verbose: $verbose; orderby: $orderby; order: $order; meta_key: $meta_key; ";
+    //$info .= "year: $year<br />";
+    $info .= "[num posts: ".count($posts)."]<br />";
+    //$info .= "args: <pre>".print_r( $args, true )."</pre>";
+    $info .= "<!-- args: <pre>".print_r( $args, true )."</pre> -->";
+    //$info .= "Last SQL-Query: <pre>{$arr_posts->request}</pre><br />"; // tft
+    $info .= "<br />";
+    
+    foreach ( $posts AS $post ) {
+        
+        setup_postdata( $post );
+        $post_id = $post->ID;
+        $post_title = $post->post_title;
+        $slug = $post->post_name;
+        $info .= '<span class="label">['.$post_id.'] "'.$post_title.'"</span><br />';
+    	
+        // init
+        $calc_info = "";
+        
+        $changes_made = false;
+        
+        // Extract html 
+        $html_content = "";
+		$url = get_post_meta( $post_id, 'old_site_url', true );
+		
+		if ( ! empty($url) ) { 
+	
+			$info .= "url: ".$url."<br />";
+			
+			// TODO: check to make sure it's an AGO url before proceeding
+		
+			// @var array|WP_Error $response
+			$response = wp_remote_get( $url);
+
+			if ( is_array( $response ) && ! is_wp_error( $response ) ) {
+			
+				$headers = $response['headers']; // array of http header lines
+				$body = $response['body']; // use the content
+			
+				$html_content .= "<pre>";
+				$html_content .= print_r($headers, true);
+				$html_content .= "</pre>";
+				$html_content .= $body;
+			
+			}
+		}
+		
+		$info .= $html_content;
+        
+        // Save content (only if previously empty)
+	
+        
+        //$info .= $calc_info;
+        $info .= "<br />";
+             
+    } // END foreach post
+
+	
+	return $info;
+	
+}
+
 
 ?>
