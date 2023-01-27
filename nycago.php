@@ -178,17 +178,18 @@ function process_newsletters ( $atts = [] ) {
 		'post_type' => 'newsletter',
 		'post_status' => 'publish',
         'posts_per_page' => $num_posts,
-        /*'meta_query' => array(
-            'relation' => 'AND',
+        'meta_query' => array(
+            //'relation' => 'AND',
             array(
-                'key'   => "date_type", 
-                'value' => 'variable',
+                'key'   => "old_site_url", 
+                'compare' => 'LIKE',
+                'value' => 'html',
             ),
-            array(
+            /*array(
                 'key'   => "date_calculation",
                 'compare' => 'EXISTS'
-            )
-        ),*/
+            )*/
+        ),
         'orderby'	=> $orderby,
         'order'	=> $order,
 	);
