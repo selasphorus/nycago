@@ -268,18 +268,13 @@ function process_newsletters ( $atts = [] ) {
     				// $images[0] contains actual image tags; $images[1] contains capture group -- filename
     				//$info .= "<pre>".print_r($images, true)."</pre>";
     				foreach ( $images[0] as $arr_img ) {
-    					$info .= "arr_img count: ".count($arr_img)."<br />";
-    					/*$info .= "arr_img[0]: ".$arr_img[0]."<br />";
-    					$info .= "arr_img[1]: ".$arr_img[1]."<br />";
-    					$info .= "arr_img[2]: ".$arr_img[2]."<br />";
-    					$info .= "arr_img[3]: ".$arr_img[3]."<br />";
-    					$info .= "arr_img[4]: ".$arr_img[4]."<br />";*/
+    					$info .= "arr_img[0]: ".$arr_img[0]."<br />";
     					$info .= "<br />";
     				}
     				//
     				foreach ( $images[1] as $arr_img ) {
-    					$info .= "arr_img count: ".count($arr_img)."<br />";
-    					//$info .= "arr_img[0]: ".$arr_img[0]."<br />";
+    					//$info .= "arr_img count: ".count($arr_img)."<br />";
+    					$info .= "arr_img[0]: ".$arr_img[0]."<br />";
     					$info .= "<br />";
     				}
 			
