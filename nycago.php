@@ -222,7 +222,8 @@ function process_newsletters ( $atts = [] ) {
         $post_id = $post->ID;
         $post_title = $post->post_title;
         $slug = $post->post_name;
-        $info .= '<span class="label">['.$post_id.'] "'.$post_title.'"</span><br />';
+        $info .= '<h2>['.$post_id.'] "'.$post_title.'"</h2>';
+        //$info .= '<span class="label">['.$post_id.'] "'.$post_title.'"</span><br />';
     	
         // init
         $calc_info = "";
