@@ -372,8 +372,8 @@ function process_newsletters ( $atts = [] ) {
 								}
     						}
     						
-    						if ( $ml_img != 0) {
-    							$ml_src = wp_get_attachment_image_url($ml_img);
+    						if ( !empty($ml_img) ) {
+    							$ml_src = wp_get_attachment_image_url($ml_img, 'full');
 								$info .= "ml_src: ".$ml_src."<br />";
     						}			
 							
