@@ -327,7 +327,7 @@ function process_newsletters ( $atts = [] ) {
 									$new_name = "NL".$nlid."-".$filename;
 									//$info .= "new_name: ".$new_name."<br />";
 								} else {
-									$new_name = null;
+									$new_name = $filename;
 								}
 							
 								// Get img alt, if any
@@ -336,7 +336,7 @@ function process_newsletters ( $atts = [] ) {
 									//$info .= "alt: ".$alt."<br />";
 									$title = $alt;
 								} else {
-									$title = $filename;
+									$title = $new_name;
 								}
 							
 								// Check if attachment already exists
@@ -374,12 +374,12 @@ function process_newsletters ( $atts = [] ) {
 											$info .= "<br />";
 											$ml_img = null;
 										} else {
-											$info .= "Image added to Media Library. New attachment ID:".$ml_img."<br />";
+											$info .= "Image added to Media Library. New attachment ID: ".$ml_img."<br />";
 											$file = get_attached_file($ml_img);
 											$path = pathinfo($file);
 										
 											// If we've got a new_name, update the new attachment accordingly
-											if ( $new_name ) {
+											if ( $new_name && $new_name != $filename ) {
 												$newfile = $path['dirname']."/".$new_name.".".$path['extension'];
 												rename($file, $newfile);    
 												update_attached_file( $ml_img, $newfile );
