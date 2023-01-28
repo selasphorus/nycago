@@ -281,7 +281,7 @@ function process_newsletters ( $atts = [] ) {
 							// Replace old link w/ new in body
 							$body = str_replace($link,$new_link,$body);
 						}
-						$info .= "<br />---<br />";
+						$info .= "---<br />";
     				}
             		
             		// Process all image tags found in the post content
