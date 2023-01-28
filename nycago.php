@@ -388,7 +388,7 @@ function process_newsletters ( $atts = [] ) {
 								}			
 							
 							}
-							$info .= '<div>';
+							$info .= '</div>';
 							//$info .= "+++<br />";
 						}
             		}
