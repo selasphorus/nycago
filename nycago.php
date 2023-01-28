@@ -296,8 +296,10 @@ function process_newsletters ( $atts = [] ) {
 						preg_match_all('/<img.+src=[\'"][^\'"]+[\'"][^>]+>/i', $body, $images);
 						$info .= "<h3>Images:</h3>";
 						foreach ( $images[0] as $img ) {
+						
+							$img_info = "";
 					
-							$info .= '<div class="smaller">';
+							$img_info .= '<div class="smaller">';
 						
 							// TODO: deal w/ width and height? probably not necessary. Any other attributes of concern?
 						
@@ -305,7 +307,7 @@ function process_newsletters ( $atts = [] ) {
 							if ( preg_match('/src=[\'"]([^\'"]+)[\'"]/', $img, $src) ) {
 							
 								$src = $src[1];
-								$info .= "src: ".$src."<br />";
+								//$info .= "src: ".$src."<br />";
 							
 								// Get file info
 								$pathinfo = pathinfo($src);
@@ -313,18 +315,15 @@ function process_newsletters ( $atts = [] ) {
 								$filename = $pathinfo['filename'];
 								$basename = $pathinfo['basename'];
 							
-								//$dirname = dirname($src);
-								$info .= "dirname: ".$dirname."<br />";
-							
-								//$filename = basename($src);
-								$info .= "filename: ".$filename."<br />";
-								$info .= "basename: ".$basename."<br />";
+								//$info .= "dirname: ".$dirname."<br />";
+								//$info .= "filename: ".$filename."<br />";
+								//$info .= "basename: ".$basename."<br />";
 							
 								// Check to see if file is in Newsletter subfolder -- e.g. /Newsletter/1611_files/article_one_1.jpg
 								// If so, make a new more specific filename -- e.g. NL1611-article_one_1.jpg
 								if ( preg_match('/\/Newsletter\/([0-9]+)_files/', $dirname, $nlid) ) {
 									$nlid = $nlid[1];
-									$info .= "nlid: ".$nlid."<br />";
+									//$info .= "nlid: ".$nlid."<br />";
 									$new_name = "NL".$nlid."-".$filename;
 									$info .= "new_name: ".$new_name."<br />";
 								} else {
@@ -334,7 +333,7 @@ function process_newsletters ( $atts = [] ) {
 								// Get img alt, if any
 								if ( preg_match('/alt=[\'"]([^\'"]+)[\'"]/', $img, $alt) ) {
 									$alt = trim($alt[1]);
-									$info .= "alt: ".$alt."<br />";
+									//$info .= "alt: ".$alt."<br />";
 									$title = $alt;
 								} else {
 									$title = $filename;
@@ -376,7 +375,7 @@ function process_newsletters ( $atts = [] ) {
 									}
 								}
 							
-								if ( !empty($ml_img) ) {
+								if ( !empty($ml_img) && $do_content ) {
 									$ml_src = wp_get_attachment_image_url($ml_img, 'full');
 									// make it a relative link
 									$ml_src = str_replace("https://samb71.sg-host.com","",$ml_src);
@@ -387,7 +386,7 @@ function process_newsletters ( $atts = [] ) {
 							
 							}
 							
-							$info .= '</div>';
+							$img_info .= '</div>';
 							//$info .= "+++<br />";
 						}
             		}
