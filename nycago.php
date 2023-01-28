@@ -282,7 +282,7 @@ function process_newsletters ( $atts = [] ) {
     					//$info .= "<br />";
     				}*/
     				//
-    				foreach ( $images as $img ) {
+    				foreach ( $images[0] as $img ) {
     				//foreach ( $images[1] as $img ) {
     					$info .= "<pre>".print_r($img, true)."</pre>";
     					//$info .= htmlspecialchars($img)."<br />";
