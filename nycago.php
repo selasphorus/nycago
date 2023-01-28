@@ -317,7 +317,7 @@ function process_newsletters ( $atts = [] ) {
 							
 							// Get img alt, if any
 							if ( preg_match('/alt=[\'"]([^\'"]+)[\'"]/', $img, $alt) ) {
-								$alt = $alt[1];
+								$alt = trim($alt[1]);
 								$info .= "alt: ".$alt."<br />";
 								$title = $alt;
 							} else {
@@ -325,10 +325,11 @@ function process_newsletters ( $atts = [] ) {
 							}
     						
     						// Check if attachment already exists
-    						if ( is_attachment($title) ) {
-    							$info .= "'".$title."' is already in the media library<br />";
+    						if ( post_exists( $title,'','','attachment') ) {
+    						//if ( is_attachment($title) ) {
+    							$info .= "'".$title."' is already in the media library.<br />";
     						} else {
-    							$info .= "'".$title."' is not yet in the media library<br />";
+    							$info .= "'".$title."' is not yet in the media library.<br />";
     						}
 							
 							/*
