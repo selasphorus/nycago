@@ -314,8 +314,10 @@ function process_newsletters ( $atts = [] ) {
 							if ( preg_match('/\/Newsletter\/([0-9]+)_files/', $dirname, $nlid) ) {
 								$nlid = $nlid[1];
 								$info .= "nlid: ".$nlid."<br />";
-								$new_name = "NL".$nlid.$filename;
+								$new_name = "NL".$nlid."-".$filename;
 								$info .= "new_name: ".$new_name."<br />";
+							} else {
+								$new_name = null;
 							}
 							
 							// Get img alt, if any
@@ -343,12 +345,22 @@ function process_newsletters ( $atts = [] ) {
 									$info .= "img_url: ".$img_url."<br />";
 						
 									// Add image to media library
-									$ml_img = media_sideload_image( $img_url, $post_id, $title );
+									$ml_img = media_sideload_image( $img_url, $post_id, $title, 'id' );
 									if ( is_wp_error( $ml_img ) ) {
 										$info .= "media_sideload_image error: ".$ml_img->get_error_message()."<br />";
 									} else {
-										$info .= $ml_img."<br />";
+										$info .= "Image added to Media Library. New attachment ID:".$ml_img."<br />";
+										// If we've got a new_name, update the new attachment accordingly
+										if ( $new_name ) {
+											$file = get_attached_file($ml_img);
+											$path = pathinfo($file);
+											$newfile = $path['dirname']."/".$new_name.".".$path['extension'];
+											rename($file, $newfile);    
+											update_attached_file( $ml_img, $newfile );
+										}
+										
 										// Replace old relative url with link to newly-uploaded image
+										//...
 									}					
 								}
     						}					
