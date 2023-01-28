@@ -286,7 +286,10 @@ function process_newsletters ( $atts = [] ) {
 							if ( !stripos($src,"http") ) {
 								$img_url = "http://www.nycago.org".$src;
 								$info .= "img_url: ".$img_url."<br />";
-								$info .= '<img src="'.$img_url.'" />';
+								//$info .= '<img src="'.$img_url.'" />';
+								//$desc    = "The WordPress Logo";
+								$ml_img = media_sideload_image( $img_url );
+								$info .= $ml_img;
 							}
 						}
 						$info .= "+++<br />";
