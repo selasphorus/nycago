@@ -332,12 +332,10 @@ function process_newsletters ( $atts = [] ) {
 								}
 							
 								// Get img alt, if any
+								// TODO: figure out how to add this to the attachment record
 								/*if ( preg_match('/alt=[\'"]([^\'"]+)[\'"]/', $img, $alt) ) {
 									$alt = trim($alt[1]);
 									//$info .= "alt: ".$alt."<br />";
-									$title = $alt;
-								} else {
-									$title = $new_name;
 								}*/
 								$title = $new_name;
 							
