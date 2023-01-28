@@ -357,6 +357,7 @@ function process_newsletters ( $atts = [] ) {
 										$file = get_attached_file($ml_img);
 										$path = pathinfo($file);
 										$ml_src = wp_get_attachment_image_url($ml_img);
+										$info .= "ml_src: ".$ml_src."<br />";
 										
 										// If we've got a new_name, update the new attachment accordingly
 										if ( $new_name ) {
