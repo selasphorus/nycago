@@ -382,8 +382,9 @@ function process_newsletters ( $atts = [] ) {
 											// If we've got a new_name, update the new attachment accordingly
 											if ( $new_name && $new_name != $filename ) {
 												$newfile = $path['dirname']."/".$new_name.".".$path['extension'];
-												rename($file, $newfile);    
-												update_attached_file( $ml_img, $newfile );
+												$info .= "file: $file/newfile: $newfile<br />";
+												//rename($file, $newfile);    
+												//update_attached_file( $ml_img, $newfile );
 											}
 										
 										}					
