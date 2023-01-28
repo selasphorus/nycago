@@ -265,12 +265,13 @@ function process_newsletters ( $atts = [] ) {
             		// Find all the image tags in the post content
     				preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $body, $images);
     				$info .= "Images:<br />";
+    				$info .= count($images)." images found.<br />";
     				//$info .= "<pre>".print_r($images, true)."</pre>";
     				foreach ( $images as $arr_img ) {
-    					$info .= "arr_img count: ".count($arr_img)."<br />";
-    					//$info .= $arr_img[0]."<br />";
-    					//$info .= $arr_img[1]."<br />";
-    					//$info .= $arr_img[2]."<br />";
+    					//$info .= "arr_img count: ".count($arr_img)."<br />";
+    					$info .= $arr_img[0]."<br />";
+    					$info .= $arr_img[1]."<br />";
+    					$info .= $arr_img[2]."<br />";
     					//$info .= "<pre>".$image."</pre>";
     					//$info .= htmlspecialchars($image)."<br />";
     					//$info .= "<pre>".print_r($image, true)."</pre>";
