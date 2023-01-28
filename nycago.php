@@ -297,6 +297,7 @@ function process_newsletters ( $atts = [] ) {
 						$info .= "<h3>Images:</h3>";
 						foreach ( $images[0] as $img ) {
 					
+							$info .= '<div class="smaller">';
 							//$info .= "<pre>".print_r($img, true)."</pre>";
 							//$info .= htmlspecialchars($img)."<br />";
 						
@@ -387,7 +388,8 @@ function process_newsletters ( $atts = [] ) {
 								}			
 							
 							}
-							$info .= "+++<br />";
+							$info .= '<div>';
+							//$info .= "+++<br />";
 						}
             		}
             		
