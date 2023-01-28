@@ -272,8 +272,9 @@ function process_newsletters ( $atts = [] ) {
     					$info .= "link: ".$link."<br />";
     					
     					if ( preg_match('/http/', $link, $tmp) ) {
-    						$tmp = $tmp[1];
-							$info .= "tmp: ".$tmp."<br />";
+    						$info .= "<pre>".print_r($tmp, true)."</pre>";
+    						//$tmp = $tmp[1];
+							//$info .= "tmp: ".$tmp."<br />";
     					}
     					
     					if ( stripos($link,"http") || strpos($link,"http") ) {
