@@ -298,8 +298,6 @@ function process_newsletters ( $atts = [] ) {
 						foreach ( $images[0] as $img ) {
 					
 							$info .= '<div class="smaller">';
-							//$info .= "<pre>".print_r($img, true)."</pre>";
-							//$info .= htmlspecialchars($img)."<br />";
 						
 							// TODO: deal w/ width and height? probably not necessary. Any other attributes of concern?
 						
@@ -388,6 +386,7 @@ function process_newsletters ( $atts = [] ) {
 								}			
 							
 							}
+							
 							$info .= '</div>';
 							//$info .= "+++<br />";
 						}
