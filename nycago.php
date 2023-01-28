@@ -304,10 +304,25 @@ function process_newsletters ( $atts = [] ) {
 							// Get filename isolated from path
 							$filename = basename($src);
 							$info .= "filename: ".$filename."<br />";
-							/*if ( preg_match('/src=[\'"]([^\'"]+)[\'"]/', $src, $filename) ) {
-								$filename = $filename[1];
-								$info .= "filename: ".$filename."<br />";
-							}*/
+							
+							// Check to see if file is in Newsletter subfolder -- e.g. /Newsletter/1611_files/article_one_1.jpg
+							// If so, make a new more specific filename -- e.g. NL_1611-article_one_1.jpg
+							//
+							
+							$dirname = dirname($src);
+							$info .= "dirname: ".$dirname."<br />";
+							
+							// check if attachment already exists
+							$attachment_args = array(
+								'posts_per_page' => 1,
+								'post_type'      => 'attachment',
+								'name'           => $desc
+							);
+							$attachment_check = new WP_Query( $attachment_args );
+
+							// if attachment exists, reuse and update data
+							if ( $attachment_check->have_posts() ) {
+							}
 							
 							// Turn the path into an absolute URL and attempt to add remote image to Media Library
 							if ( !stripos($src,"http") ) {
