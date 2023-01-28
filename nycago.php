@@ -267,7 +267,10 @@ function process_newsletters ( $atts = [] ) {
     				//preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $body, $images);
     				$info .= "Images:<br />";
     				// $images[0] contains actual image tags; $images[1] contains capture group -- filename
-    				$info .= "<pre>".print_r($images, true)."</pre>";
+    				//$info .= "<pre>".print_r($images, true)."</pre>";
+    				foreach ( $images as $img ) {
+    					$info .= "<pre>".print_r($img, true)."</pre>";
+    				}
     				/*foreach ( $images[0] as $arr_img ) {
     					$info .= "arr_img[0]: ".$arr_img[0]."<br />";
     					$info .= "<br />";
