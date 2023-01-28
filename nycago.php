@@ -366,9 +366,6 @@ function process_newsletters ( $atts = [] ) {
 											update_attached_file( $ml_img, $newfile );
 										}
 										
-										// Replace old relative url with link to newly-uploaded image
-										//...
-										$body = str_replace($src,$ml_src,$body);
 									}					
 								}
     						}
@@ -376,6 +373,10 @@ function process_newsletters ( $atts = [] ) {
     						if ( !empty($ml_img) ) {
     							$ml_src = wp_get_attachment_image_url($ml_img, 'full');
 								$info .= "ml_src: ".$ml_src."<br />";
+								// make it a relative link
+								$ml_src = str_replace("https://samb71.sg-host.com","",$ml_src);
+								// Replace old relative url with link to newly-uploaded image
+								$body = str_replace($src,$ml_src,$body);
     						}			
 							
 						}
