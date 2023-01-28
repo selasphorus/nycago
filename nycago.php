@@ -266,7 +266,7 @@ function process_newsletters ( $atts = [] ) {
     				preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $body, $images);
     				$info .= "Images:<br />";
     				foreach ( $images as $image ) {
-    					$info .= print_r($image, true)."<br />";
+    					$info .= "<pre>".print_r($image, true)."</pre>";
     				}
 			
 				}			
