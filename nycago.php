@@ -25,11 +25,12 @@ if ( !function_exists( 'add_action' ) ) {
 $plugin_path = plugin_dir_path( __FILE__ );
 
 /* +~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+ */
-
-require_once(ABSPATH . 'wp-admin/includes/media.php');
-require_once(ABSPATH . 'wp-admin/includes/file.php');
-require_once(ABSPATH . 'wp-admin/includes/image.php');
-
+if ( ! is_admin() ) {
+	require_once(ABSPATH . 'wp-admin/includes/media.php');
+	require_once(ABSPATH . 'wp-admin/includes/file.php');
+	require_once(ABSPATH . 'wp-admin/includes/image.php');
+	require_once(ABSPATH . 'wp-admin/includes/post.php' );
+}
 // Include sub-files
 // TODO: make them required? Otherwise dependencies may be an issue.
 // TODO: maybe: convert to classes/methods approach??
