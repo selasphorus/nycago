@@ -332,13 +332,14 @@ function process_newsletters ( $atts = [] ) {
 								}
 							
 								// Get img alt, if any
-								if ( preg_match('/alt=[\'"]([^\'"]+)[\'"]/', $img, $alt) ) {
+								/*if ( preg_match('/alt=[\'"]([^\'"]+)[\'"]/', $img, $alt) ) {
 									$alt = trim($alt[1]);
 									//$info .= "alt: ".$alt."<br />";
 									$title = $alt;
 								} else {
 									$title = $new_name;
-								}
+								}*/
+								$title = $new_name;
 							
 								// Check if attachment already exists
 								if ( $ml_img = post_exists( $title,'','','attachment') ) {
