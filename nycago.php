@@ -159,6 +159,9 @@ function process_newsletters ( $atts = [] ) {
 	$a = shortcode_atts( array(
         'testing' => true,
         'verbose' => false,
+        'do_images' => false,
+        'do_links' => false,
+        'do_content' => false,
         'id' => null,
         'year' => date('Y'),
         'num_posts' => 10,
@@ -170,6 +173,11 @@ function process_newsletters ( $atts = [] ) {
 	
     $testing = $a['testing'];
     $verbose = $a['verbose'];
+    //
+    $do_images = $a['do_images'];
+    $do_links = $a['do_links'];
+    $do_content = $a['do_content'];
+    //
     $num_posts = (int) $a['num_posts'];
     $year = get_query_var( 'y' );
     if ( $year == "" ) { $year = $a['year']; } //$year = get_query_var( 'year' ) ? get_query_var( 'year' ) : $a['year'];
@@ -260,139 +268,141 @@ function process_newsletters ( $atts = [] ) {
 					$info .= "last_modified: ".$last_modified."<br />";
 					//$content_length = $headers['content-length'];
 					
-					// urls
-					# Does the line contain any hyperlinks? If so, extract the filename or link(s).
-            		//if ( $line =~ /<a href=\"([^>\"]*)\"/ || $line =~ /<a name=\"([A-Za-z0-9]+)\"/) {} //pl
-            		// Update relative URLs as needed... WIP
-            		// Process all image tags found in the post content
-    				preg_match_all('/<a.+href=[\'"]([^\'"]+)[\'"][^>]+>/i', $body, $links);
-    				$info .= "<h3>Links:</h3>";
-    				foreach ( $links[1] as $link ) {
-    				
-    					$info .= "link: ".$link."<br />";
-    					
-    					preg_match('/http/', $link, $tmp);
-						if ( count($tmp) > 0 ) { 
-							$new_link = null;
-							//$info .= "http found via preg_match (not a relative link)<br />";
-						} else {
-							$new_link = "http://www.nycago.org".$link;
-							$info .= ">> new_link: ".$new_link."<br />";
-							// Replace old link w/ new in body
-							$body = str_replace($link,$new_link,$body);
-						}
-						$info .= "---<br />";
-    				}
-            		
-            		// Process all image tags found in the post content
-    				preg_match_all('/<img.+src=[\'"][^\'"]+[\'"][^>]+>/i', $body, $images);
-    				$info .= "<h3>Images:</h3>";
-    				foreach ( $images[0] as $img ) {
-    				
-    					//$info .= "<pre>".print_r($img, true)."</pre>";
-    					//$info .= htmlspecialchars($img)."<br />";
-    					
-    					// TODO: deal w/ width and height? probably not necessary. Any other attributes of concern?
-    					
-    					// Get img src
-    					if ( preg_match('/src=[\'"]([^\'"]+)[\'"]/', $img, $src) ) {
-							
-							$src = $src[1];
-							$info .= "src: ".$src."<br />";
-							
-							// Get file info
-							$pathinfo = pathinfo($src);
-							$dirname = $pathinfo['dirname'];
-							$filename = $pathinfo['filename'];
-							$basename = $pathinfo['basename'];
-							
-							//$dirname = dirname($src);
-							$info .= "dirname: ".$dirname."<br />";
-							
-							//$filename = basename($src);
-							$info .= "filename: ".$filename."<br />";
-							$info .= "basename: ".$basename."<br />";
-							
-							// Check to see if file is in Newsletter subfolder -- e.g. /Newsletter/1611_files/article_one_1.jpg
-							// If so, make a new more specific filename -- e.g. NL1611-article_one_1.jpg
-							if ( preg_match('/\/Newsletter\/([0-9]+)_files/', $dirname, $nlid) ) {
-								$nlid = $nlid[1];
-								$info .= "nlid: ".$nlid."<br />";
-								$new_name = "NL".$nlid."-".$filename;
-								$info .= "new_name: ".$new_name."<br />";
-							} else {
-								$new_name = null;
-							}
-							
-							// Get img alt, if any
-							if ( preg_match('/alt=[\'"]([^\'"]+)[\'"]/', $img, $alt) ) {
-								$alt = trim($alt[1]);
-								$info .= "alt: ".$alt."<br />";
-								$title = $alt;
-							} else {
-								$title = $filename;
-							}
-    						
-    						// Check if attachment already exists
-    						if ( $ml_img = post_exists( $title,'','','attachment') ) {
-    							
-    							$info .= "<em>'".$title."' is already in the media library.</em><br />";
-    							
-    						} else {
-    							
-    							$info .= "'".$title."' is not yet in the media library.<br />";
-    							
-    							// Turn the path into an absolute URL and attempt to add remote image to Media Library
-								if ( !stripos($src,"http") ) {
-								
-									$img_url = "http://www.nycago.org".$src;
-									$info .= "img_url: ".$img_url."<br />";
-						
-									// Add image to media library
-									$ml_img = media_sideload_image( $img_url, $post_id, $title, 'id' );
-									if ( is_wp_error( $ml_img ) ) {
-										$info .= "media_sideload_image error: ".$ml_img->get_error_message()."<br />";
-										$ml_img = null;
-									} else {
-										$info .= "Image added to Media Library. New attachment ID:".$ml_img."<br />";
-										$file = get_attached_file($ml_img);
-										$path = pathinfo($file);
-										
-										// If we've got a new_name, update the new attachment accordingly
-										if ( $new_name ) {
-											$newfile = $path['dirname']."/".$new_name.".".$path['extension'];
-											rename($file, $newfile);    
-											update_attached_file( $ml_img, $newfile );
-										}
-										
-									}					
-								}
-    						}
-    						
-    						if ( !empty($ml_img) ) {
-    							$ml_src = wp_get_attachment_image_url($ml_img, 'full');
-								// make it a relative link
-								$ml_src = str_replace("https://samb71.sg-host.com","",$ml_src);
-								$info .= "ml_src: ".$ml_src."<br />";
-								// Replace old relative url with link to newly-uploaded image
-								$body = str_replace($src,$ml_src,$body);
-    						}			
-							
-						}
-						$info .= "+++<br />";
-    				}
-    				
-					// WIP -- Deal w/ anything that's not actually content/copy -- e.g. stylesheets
-					// <title
-					// <meta
-					// <link -- e.g. <link href="/styles/nycago.css" rel="stylesheet" type="text/css">
-					// <style
-					// <font
-					// etc???
+					if ( $do_links ) {
+						// Process all hyperlinks found in the post content
+						preg_match_all('/<a.+href=[\'"]([^\'"]+)[\'"][^>]+>/i', $body, $links);
+						$info .= "<h3>Links:</h3>";
+						foreach ( $links[1] as $link ) {
 					
-					$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br />";
-					$info .= $body;
-					$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br /><br />";
+							$info .= "link: ".$link."<br />";
+						
+							preg_match('/http/', $link, $tmp);
+							if ( count($tmp) > 0 ) { 
+								$new_link = null;
+								//$info .= "http found via preg_match (not a relative link)<br />";
+							} else {
+								$new_link = "http://www.nycago.org".$link;
+								$info .= ">> new_link: ".$new_link."<br />";
+								// Replace old link w/ new in body
+								$body = str_replace($link,$new_link,$body);
+							}
+							$info .= "---<br />";
+						}
+					}
+            		
+            		if ( $do_images ) {
+            			// Process all image tags found in the post content
+						preg_match_all('/<img.+src=[\'"][^\'"]+[\'"][^>]+>/i', $body, $images);
+						$info .= "<h3>Images:</h3>";
+						foreach ( $images[0] as $img ) {
+					
+							//$info .= "<pre>".print_r($img, true)."</pre>";
+							//$info .= htmlspecialchars($img)."<br />";
+						
+							// TODO: deal w/ width and height? probably not necessary. Any other attributes of concern?
+						
+							// Get img src
+							if ( preg_match('/src=[\'"]([^\'"]+)[\'"]/', $img, $src) ) {
+							
+								$src = $src[1];
+								$info .= "src: ".$src."<br />";
+							
+								// Get file info
+								$pathinfo = pathinfo($src);
+								$dirname = $pathinfo['dirname'];
+								$filename = $pathinfo['filename'];
+								$basename = $pathinfo['basename'];
+							
+								//$dirname = dirname($src);
+								$info .= "dirname: ".$dirname."<br />";
+							
+								//$filename = basename($src);
+								$info .= "filename: ".$filename."<br />";
+								$info .= "basename: ".$basename."<br />";
+							
+								// Check to see if file is in Newsletter subfolder -- e.g. /Newsletter/1611_files/article_one_1.jpg
+								// If so, make a new more specific filename -- e.g. NL1611-article_one_1.jpg
+								if ( preg_match('/\/Newsletter\/([0-9]+)_files/', $dirname, $nlid) ) {
+									$nlid = $nlid[1];
+									$info .= "nlid: ".$nlid."<br />";
+									$new_name = "NL".$nlid."-".$filename;
+									$info .= "new_name: ".$new_name."<br />";
+								} else {
+									$new_name = null;
+								}
+							
+								// Get img alt, if any
+								if ( preg_match('/alt=[\'"]([^\'"]+)[\'"]/', $img, $alt) ) {
+									$alt = trim($alt[1]);
+									$info .= "alt: ".$alt."<br />";
+									$title = $alt;
+								} else {
+									$title = $filename;
+								}
+							
+								// Check if attachment already exists
+								if ( $ml_img = post_exists( $title,'','','attachment') ) {
+								
+									$info .= "<em>'".$title."' is already in the media library.</em><br />";
+								
+								} else {
+								
+									$info .= "'".$title."' is not yet in the media library.<br />";
+								
+									// Turn the path into an absolute URL and attempt to add remote image to Media Library
+									if ( !stripos($src,"http") ) {
+								
+										$img_url = "http://www.nycago.org".$src;
+										$info .= "img_url: ".$img_url."<br />";
+						
+										// Add image to media library
+										$ml_img = media_sideload_image( $img_url, $post_id, $title, 'id' );
+										if ( is_wp_error( $ml_img ) ) {
+											$info .= "media_sideload_image error: ".$ml_img->get_error_message()."<br />";
+											$ml_img = null;
+										} else {
+											$info .= "Image added to Media Library. New attachment ID:".$ml_img."<br />";
+											$file = get_attached_file($ml_img);
+											$path = pathinfo($file);
+										
+											// If we've got a new_name, update the new attachment accordingly
+											if ( $new_name ) {
+												$newfile = $path['dirname']."/".$new_name.".".$path['extension'];
+												rename($file, $newfile);    
+												update_attached_file( $ml_img, $newfile );
+											}
+										
+										}					
+									}
+								}
+							
+								if ( !empty($ml_img) ) {
+									$ml_src = wp_get_attachment_image_url($ml_img, 'full');
+									// make it a relative link
+									$ml_src = str_replace("https://samb71.sg-host.com","",$ml_src);
+									$info .= "ml_src: ".$ml_src."<br />";
+									// Replace old relative url with link to newly-uploaded image
+									$body = str_replace($src,$ml_src,$body);
+								}			
+							
+							}
+							$info .= "+++<br />";
+						}
+            		}
+            		
+    				if ( $do_content ) {
+						// WIP -- Deal w/ anything that's not actually content/copy -- e.g. stylesheets
+						// <title
+						// <meta
+						// <link -- e.g. <link href="/styles/nycago.css" rel="stylesheet" type="text/css">
+						// <style
+						// <font
+						// etc???
+					
+						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br />";
+						$info .= $body;
+						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br /><br />";
+					}
 			
 				}			
 			}
