@@ -358,7 +358,6 @@ function process_newsletters ( $atts = [] ) {
 										$file = get_attached_file($ml_img);
 										$path = pathinfo($file);
 										
-										
 										// If we've got a new_name, update the new attachment accordingly
 										if ( $new_name ) {
 											$newfile = $path['dirname']."/".$new_name.".".$path['extension'];
@@ -372,9 +371,9 @@ function process_newsletters ( $atts = [] ) {
     						
     						if ( !empty($ml_img) ) {
     							$ml_src = wp_get_attachment_image_url($ml_img, 'full');
-								$info .= "ml_src: ".$ml_src."<br />";
 								// make it a relative link
 								$ml_src = str_replace("https://samb71.sg-host.com","",$ml_src);
+								$info .= "ml_src: ".$ml_src."<br />";
 								// Replace old relative url with link to newly-uploaded image
 								$body = str_replace($src,$ml_src,$body);
     						}			
