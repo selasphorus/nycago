@@ -271,7 +271,9 @@ function process_newsletters ( $atts = [] ) {
     					$info .= "link: ".$link."<br />";
     					if ( !stripos($link,"http") ) {
 							$new_link = "http://www.nycago.org".$link;
-							$info .= "new_link: ".$new_link."<br />";
+							$info .= ">> new_link: ".$new_link."<br />";
+						} else {
+							$info .= "not a relative link<br />";
 						}
     				}
             		
