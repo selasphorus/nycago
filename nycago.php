@@ -250,7 +250,24 @@ function process_newsletters ( $atts = [] ) {
 					$html_content .= "<pre>";
 					$html_content .= print_r($headers, true);
 					$html_content .= "</pre>";
-					$html_content .= $body;
+					//$html_content .= $body;
+					
+					// WIP/TODO: deal w/ relative URLs; import images into Media Library...
+					
+					// stylesheets
+					// urls
+					# Does the line contain any hyperlinks? If so, extract the filename or link(s).
+            		//if ( $line =~ /<a href=\"([^>\"]*)\"/ || $line =~ /<a name=\"([A-Za-z0-9]+)\"/) {} //pl
+            		
+					// image tags
+					# Does the line contain any images? If so, extract and store the file info, alt tag...
+            		//if ( $line =~ /(<img[^>]*src=[^>]*>)/ ) {} // pl
+            		// Find all the image tags in the post content
+    				preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $body, $images);
+    				$info .= "Images:<br />";
+    				foreach ( $images as $image ) {
+    					$info .= print_r($image, true)."<br />";
+    				}
 			
 				}			
 			}
