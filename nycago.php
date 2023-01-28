@@ -300,13 +300,24 @@ function process_newsletters ( $atts = [] ) {
 							//$info .= "SRC:<pre>".print_r($src, true)."</pre>"; // tft
 							$src = $src[1];
 							$info .= "src: ".$src."<br />";
+							
+							// Get filename isolated from path
+							$filename = basename($src);
+							$info .= "filename: ".$filename."<br />";
+							/*if ( preg_match('/src=[\'"]([^\'"]+)[\'"]/', $src, $filename) ) {
+								$filename = $filename[1];
+								$info .= "filename: ".$filename."<br />";
+							}*/
+							
+							// Turn the path into an absolute URL and attempt to add remote image to Media Library
 							if ( !stripos($src,"http") ) {
 								$img_url = "http://www.nycago.org".$src;
 								$info .= "img_url: ".$img_url."<br />";
 								//$info .= '<img src="'.$img_url.'" />';
 								//$alt    = "The WordPress Logo";
-								if ( $testing == "false" ) {
+								//if ( $testing == "false" ) {
 									// TODO: check to see if img w/ same filename already exists in Media Library?
+									
 									// Add image to media library
 									$ml_img = media_sideload_image( $img_url, $post_id, $alt );
 									if ( is_wp_error( $ml_img ) ) {
@@ -315,8 +326,7 @@ function process_newsletters ( $atts = [] ) {
 										$info .= $ml_img."<br />";
 										// Replace old relative url with link to newly-uploaded image
 									}
-								}
-								
+								//}								
 							}
 						}
 						$info .= "+++<br />";
