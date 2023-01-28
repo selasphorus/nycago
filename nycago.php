@@ -343,7 +343,8 @@ function process_newsletters ( $atts = [] ) {
 								if ( $ml_img = post_exists( $title,'','','attachment') ) {
 								
 									$info .= "<strong>'".$title."' is already in the media library.</strong>";
-									$info .= " ($filename/$new_name)<br />";
+									if ( $new_name ) { $info .= " ($filename/$new_name)"; }
+									$info .= "<br />";
 								
 								} else {
 								
