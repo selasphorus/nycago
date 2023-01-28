@@ -271,12 +271,17 @@ function process_newsletters ( $atts = [] ) {
     				
     					$info .= "link: ".$link."<br />";
     					
+    					if ( preg_match('/http/', $link, $tmp) ) {
+    						$tmp = $tmp[1];
+							$info .= "tmp: ".$tmp."<br />";
+    					}
+    					
     					if ( stripos($link,"http") || strpos($link,"http") ) {
     						$info .= stripos($link,"http")."<br />";
     					} else {
     						$info .= "No 'http' in $link<br />";
     					}
-    					
+    					// Why isn't this working? It's like the http is invisible...
     					if ( !stripos($link,"http") ) {
 							$new_link = "http://www.nycago.org".$link;
 							$info .= ">> new_link: ".$new_link."<br />";
