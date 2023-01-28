@@ -250,17 +250,14 @@ function process_newsletters ( $atts = [] ) {
 				if ( is_array( $response ) && ! is_wp_error( $response ) ) {
 			
 					$headers = $response['headers']; // array of http header lines -- protected object
-					$body = $response['body']; // use the content
-					
-					//$headers = wp_remote_retrieve_headers($response);
+					$body = $response['body']; // use the content					
 			
-					$info .= "<pre>";
-					$info .= print_r($headers, true);
-					$info .= "</pre>";
+					//$info .= "<pre>".print_r($headers, true)."</pre>";
 					//$html_content .= $body;
 					
 					$last_modified = $headers['last-modified'];
 					$info .= "last_modified: ".$last_modified."<br />";
+					//$content_length = $headers['content-length'];
 					
 					// WIP/TODO: deal w/ relative URLs; import images into Media Library...
 					
