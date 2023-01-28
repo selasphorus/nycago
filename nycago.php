@@ -293,7 +293,11 @@ function process_newsletters ( $atts = [] ) {
 								//$info .= '<img src="'.$img_url.'" />';
 								//$desc    = "The WordPress Logo";
 								$ml_img = media_sideload_image( $img_url );
-								//if ( $ml_img ) { $info .= $ml_img; }
+								if ( is_wp_error( $ml_img ) ) {
+									$info .= $ml_img->get_error_message();
+								} else {
+									$info .= $ml_img;
+								}
 							}
 						}
 						$info .= "+++<br />";
