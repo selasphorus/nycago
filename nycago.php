@@ -216,7 +216,8 @@ function process_newsletters ( $atts = [] ) {
     $posts = $arr_posts->posts;
     
     $info .= ">>> process_newsletters <<<<br />";
-    $info .= "testing: $testing; verbose: $verbose; orderby: $orderby; order: $order; meta_key: $meta_key; ";
+    $info .= "testing: $testing; verbose: $verbose; orderby: $orderby; order: $order; meta_key: $meta_key;<br />";
+    $info .= "do_images: $do_images; do_links: $do_links; do_content: $do_content;<br />";
     //$info .= "year: $year<br />";
     $info .= "[num posts: ".count($posts)."]<br />";
     //$info .= "args: <pre>".print_r( $args, true )."</pre>";
