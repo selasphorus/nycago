@@ -326,9 +326,9 @@ function process_newsletters ( $atts = [] ) {
     						
     						// Check if attachment already exists
     						if ( is_attachment($title) ) {
-    							$info .= $filename." is already in the medial library<br />";
+    							$info .= $title." is already in the medial library<br />";
     						} else {
-    							$info .= $filename." is note yet in the medial library<br />";
+    							$info .= $title." is not yet in the medial library<br />";
     						}
 							
 							/*
