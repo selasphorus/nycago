@@ -268,9 +268,10 @@ function process_newsletters ( $atts = [] ) {
     				preg_match_all('/<a.+href=[\'"]([^\'"]+)[\'"][^>]+>/i', $body, $links);
     				$info .= "<h3>Links:</h3>";
     				foreach ( $links[1] as $link ) {
+    				
     					$info .= "link: ".$link."<br />";
     					
-    					if ( stripos($link,"http") ) {
+    					if ( stripos($link,"http") || strpos($link,"http") ) {
     						$info .= stripos($link,"http")."<br />";
     					} else {
     						$info .= "No 'http' in $link<br />";
