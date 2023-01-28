@@ -281,8 +281,12 @@ function process_newsletters ( $atts = [] ) {
     					$info .= $img."<br />";
     					if ( preg_match('/src=[\'"]([^\'"]+)[\'"]/', $img, $src) ) {
 							//$info .= "SRC:<pre>".print_r($src, true)."</pre>"; // tft
-							$src = $matches[1];
+							$src = $src[1];
 							$info .= "src: ".$src."<br />";
+							if ( !stripos($src,"http") ) {
+								$img_url = "http://www.nycago.org/".$src;
+								$info .= "img_url: ".$img_url."<br />";
+							}
 						}
 						$info .= "+++<br />";
     				}
