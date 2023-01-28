@@ -287,12 +287,6 @@ function process_newsletters ( $atts = [] ) {
     					//$info .= "<pre>".print_r($img, true)."</pre>";
     					//$info .= htmlspecialchars($img)."<br />";
     					
-    					// Get img alt, if any
-    					if ( preg_match('/alt=[\'"]([^\'"]+)[\'"]/', $img, $alt) ) {
-    						$alt = $alt[1];
-							$info .= "alt: ".$alt."<br />";
-    					}
-    					
     					// TODO: deal w/ width and height? probably not necessary. Any other attributes of concern?
     					
     					// Get img src
@@ -321,6 +315,23 @@ function process_newsletters ( $atts = [] ) {
 								$info .= "nlid: ".$nlid."<br />";
 							}
 							
+							// Get img alt, if any
+							if ( preg_match('/alt=[\'"]([^\'"]+)[\'"]/', $img, $alt) ) {
+								$alt = $alt[1];
+								$info .= "alt: ".$alt."<br />";
+								$title = $alt;
+							} else {
+								$title = filename;
+							}
+    						
+    						// Check if attachment already exists
+    						if ( is_attachment($title) ) {
+    							$info .= $img_url." is already in the medial library<br />";
+    						} else {
+    						
+    						}
+							
+							/*
 							// check if attachment already exists
 							$attachment_args = array(
 								'posts_per_page' => 1,
@@ -328,8 +339,8 @@ function process_newsletters ( $atts = [] ) {
 								'name'           => $filename
 							);
 							$attachment_check = new WP_Query( $attachment_args );
-
-							// if attachment exists, reuse and update data
+							*/
+							/*
 							if ( $attachment_check->have_posts() ) {
 								$info .= $img_url." is already in the medial library<br />";
 							} else {
@@ -343,7 +354,7 @@ function process_newsletters ( $atts = [] ) {
 										// TODO: check to see if img w/ same filename already exists in Media Library?
 									
 										// Add image to media library
-										$ml_img = media_sideload_image( $img_url, $post_id, $alt );
+										$ml_img = media_sideload_image( $img_url, $post_id, $title );
 										if ( is_wp_error( $ml_img ) ) {
 											$info .= "media_sideload_image error: ".$ml_img->get_error_message()."<br />";
 										} else {
@@ -352,7 +363,7 @@ function process_newsletters ( $atts = [] ) {
 										}
 									//}								
 								}
-							}							
+							}*/							
 							
 						}
 						$info .= "+++<br />";
