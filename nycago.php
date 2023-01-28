@@ -274,10 +274,12 @@ function process_newsletters ( $atts = [] ) {
     					preg_match('/http/', $link, $tmp);
 						if ( count($tmp) > 0 ) { 
 							$new_link = null;
-							$info .= "http found via preg_match (not a relative link)<br />";
+							//$info .= "http found via preg_match (not a relative link)<br />";
 						} else {
 							$new_link = "http://www.nycago.org".$link;
 							$info .= ">> new_link: ".$new_link."<br />";
+							// Replace old link w/ new in body
+							$body = str_replace($link,$new_link,$body);
 						}
 						$info .= "<br />---<br />";
     				}
@@ -352,10 +354,12 @@ function process_newsletters ( $atts = [] ) {
 										$info .= "media_sideload_image error: ".$ml_img->get_error_message()."<br />";
 									} else {
 										$info .= "Image added to Media Library. New attachment ID:".$ml_img."<br />";
+										$file = get_attached_file($ml_img);
+										$path = pathinfo($file);
+										$ml_src = wp_get_attachment_image_url($ml_img);
+										
 										// If we've got a new_name, update the new attachment accordingly
 										if ( $new_name ) {
-											$file = get_attached_file($ml_img);
-											$path = pathinfo($file);
 											$newfile = $path['dirname']."/".$new_name.".".$path['extension'];
 											rename($file, $newfile);    
 											update_attached_file( $ml_img, $newfile );
@@ -363,6 +367,7 @@ function process_newsletters ( $atts = [] ) {
 										
 										// Replace old relative url with link to newly-uploaded image
 										//...
+										$body = str_replace($src,$ml_src,$body);
 									}					
 								}
     						}					
