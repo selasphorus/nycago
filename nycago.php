@@ -299,7 +299,7 @@ function process_newsletters ( $atts = [] ) {
 						
 							$img_info = "";
 					
-							$img_info .= '<div class="smaller">';
+							$info .= '<div class="smaller">';
 						
 							// TODO: deal w/ width and height? probably not necessary. Any other attributes of concern?
 						
@@ -348,21 +348,22 @@ function process_newsletters ( $atts = [] ) {
 								
 								} else {
 								
-									$info .= "<strong>'".$title."' is not yet in the media library.</strong><br />";
+									$info .= "<strong>'".$title."' is not yet in the media library.</strong>";
 								
 									// Turn the path into an absolute URL and attempt to add remote image to Media Library
 									if ( !stripos($src,"http") ) {
 								
 										$img_url = "http://www.nycago.org".$src;
 										//$info .= "img_url: ".$img_url."<br />";
+										$info . = " [$img_url]<br />";
 						
 										// Add image to media library
 										$ml_img = media_sideload_image( $img_url, $post_id, $title, 'id' );
 										if ( is_wp_error( $ml_img ) ) {
-											$info .= "media_sideload_image error: ".$ml_img->get_error_message()." [$img_url]<br />";
+											$info .= "media_sideload_image error: ".$ml_img->get_error_message()."<br />";
 											$ml_img = null;
 										} else {
-											$info .= "Image added to Media Library. New attachment ID:".$ml_img." [$img_url]<br />";
+											$info .= "Image added to Media Library. New attachment ID:".$ml_img."<br />";
 											$file = get_attached_file($ml_img);
 											$path = pathinfo($file);
 										
@@ -388,8 +389,8 @@ function process_newsletters ( $atts = [] ) {
 							
 							}
 							
-							$img_info .= '</div>';
 							//$info .= "+++<br />";
+							$info .= '</div>';
 						}
             		}
             		
