@@ -297,32 +297,39 @@ function process_newsletters ( $atts = [] ) {
     					
     					// Get img src
     					if ( preg_match('/src=[\'"]([^\'"]+)[\'"]/', $img, $src) ) {
-							//$info .= "SRC:<pre>".print_r($src, true)."</pre>"; // tft
+							
 							$src = $src[1];
 							$info .= "src: ".$src."<br />";
 							
-							// Get filename isolated from path
-							$filename = basename($src);
+							// Get file info
+							$pathinfo = pathinfo($src);
+							$dirname = $pathinfo['dirname'];
+							$filename = $pathinfo['filename'];
+							$basename = $pathinfo['basename'];
+							
+							//$dirname = dirname($src);
+							$info .= "dirname: ".$dirname."<br />";
+							
+							//$filename = basename($src);
 							$info .= "filename: ".$filename."<br />";
+							$info .= "basename: ".$basename."<br />";
 							
 							// Check to see if file is in Newsletter subfolder -- e.g. /Newsletter/1611_files/article_one_1.jpg
 							// If so, make a new more specific filename -- e.g. NL_1611-article_one_1.jpg
 							//
 							
-							$dirname = dirname($src);
-							$info .= "dirname: ".$dirname."<br />";
-							
+							/*
 							// check if attachment already exists
 							$attachment_args = array(
 								'posts_per_page' => 1,
 								'post_type'      => 'attachment',
-								'name'           => $desc
+								'name'           => $filename
 							);
 							$attachment_check = new WP_Query( $attachment_args );
 
 							// if attachment exists, reuse and update data
 							if ( $attachment_check->have_posts() ) {
-							}
+							}*/
 							
 							// Turn the path into an absolute URL and attempt to add remote image to Media Library
 							if ( !stripos($src,"http") ) {
