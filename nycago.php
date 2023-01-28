@@ -271,12 +271,14 @@ function process_newsletters ( $atts = [] ) {
     				
     					$info .= "link: ".$link."<br />";
     					
-    					if ( preg_match('/http/', $link, $tmp) ) {
-    						if ( count($tmp) > 0 ) { $info .= "http found via preg_match<br />"; }
-    						//$info .= "<pre>".print_r($tmp, true)."</pre>";
-    						//$tmp = $tmp[1];
-							//$info .= "tmp: ".$tmp."<br />";
-    					}
+    					preg_match('/http/', $link, $tmp);
+						if ( count($tmp) > 0 ) { 
+							$info .= "http found via preg_match<br />";
+							$info .= "not a relative link<br />";
+						} else {
+							$new_link = "http://www.nycago.org".$link;
+							$info .= ">> new_link: ".$new_link."<br />";
+						}
     					
     					if ( stripos($link,'http') || strpos($link,'http') ) {
     						$info .= stripos($link,'http')."<br />";
