@@ -271,7 +271,9 @@ function process_newsletters ( $atts = [] ) {
     					$info .= "link: ".$link."<br />";
     					
     					if ( stripos($link,"http") ) {
-    						$info .= stripos($link,"http");
+    						$info .= stripos($link,"http")."<br />";
+    					} else {
+    						$info .= "No 'http' in $link<br />";
     					}
     					
     					if ( !stripos($link,"http") ) {
