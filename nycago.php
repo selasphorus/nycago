@@ -294,9 +294,9 @@ function process_newsletters ( $atts = [] ) {
 								//$desc    = "The WordPress Logo";
 								$ml_img = media_sideload_image( $img_url );
 								if ( is_wp_error( $ml_img ) ) {
-									$info .= $ml_img->get_error_message();
+									$info .= "media_sideload_image error: ".$ml_img->get_error_message()."<br />";
 								} else {
-									$info .= $ml_img;
+									$info .= $ml_img."<br />";
 								}
 							}
 						}
