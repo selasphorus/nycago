@@ -284,14 +284,17 @@ function process_newsletters ( $atts = [] ) {
     				//
     				foreach ( $images[0] as $img ) {
     				//foreach ( $images[1] as $img ) {
-    					$info .= "<pre>".print_r($img, true)."</pre>";
-    					//$info .= htmlspecialchars($img)."<br />";
+    					//$info .= "<pre>".print_r($img, true)."</pre>";
+    					$info .= htmlspecialchars($img)."<br />";
+    					
     					// Get img alt, if any
     					if ( preg_match('/alt=[\'"]([^\'"]+)[\'"]/', $img, $alt) ) {
     						$alt = $alt[1];
 							$info .= "alt: ".$alt."<br />";
     					}
+    					
     					// TODO: deal w/ width and height? probably not necessary. Any other attributes of concern?
+    					
     					// Get img src
     					if ( preg_match('/src=[\'"]([^\'"]+)[\'"]/', $img, $src) ) {
 							//$info .= "SRC:<pre>".print_r($src, true)."</pre>"; // tft
