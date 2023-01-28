@@ -355,7 +355,7 @@ function process_newsletters ( $atts = [] ) {
 								
 										$img_url = "http://www.nycago.org".$src;
 										//$info .= "img_url: ".$img_url."<br />";
-										$info . = " [$img_url]<br />";
+										$info .= " [$img_url]<br />";
 						
 										// Add image to media library
 										$ml_img = media_sideload_image( $img_url, $post_id, $title, 'id' );
@@ -389,8 +389,8 @@ function process_newsletters ( $atts = [] ) {
 							
 							}
 							
-							//$info .= "+++<br />";
 							$info .= '</div>';
+							//$info .= "+++<br />";
 						}
             		}
             		
