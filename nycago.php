@@ -383,8 +383,8 @@ function process_newsletters ( $atts = [] ) {
 											if ( $new_name && $new_name != $filename ) {
 												$newfile = $path['dirname']."/".$new_name.".".$path['extension'];
 												$info .= "file: $file/newfile: $newfile<br />";
-												//rename($file, $newfile);    
-												//update_attached_file( $ml_img, $newfile );
+												rename($file, $newfile);    
+												update_attached_file( $ml_img, $newfile );
 											}
 										
 										}					
