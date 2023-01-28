@@ -321,7 +321,6 @@ function process_newsletters ( $atts = [] ) {
 								$info .= "nlid: ".$nlid."<br />";
 							}
 							
-							/*
 							// check if attachment already exists
 							$attachment_args = array(
 								'posts_per_page' => 1,
@@ -332,27 +331,29 @@ function process_newsletters ( $atts = [] ) {
 
 							// if attachment exists, reuse and update data
 							if ( $attachment_check->have_posts() ) {
-							}*/
-							
-							// Turn the path into an absolute URL and attempt to add remote image to Media Library
-							if ( !stripos($src,"http") ) {
-								$img_url = "http://www.nycago.org".$src;
-								$info .= "img_url: ".$img_url."<br />";
-								//$info .= '<img src="'.$img_url.'" />';
-								//$alt    = "The WordPress Logo";
-								//if ( $testing == "false" ) {
-									// TODO: check to see if img w/ same filename already exists in Media Library?
+								$info .= $img_url." is already in the medial library<br />";
+							} else {
+								// Turn the path into an absolute URL and attempt to add remote image to Media Library
+								if ( !stripos($src,"http") ) {
+									$img_url = "http://www.nycago.org".$src;
+									$info .= "img_url: ".$img_url."<br />";
+									//$info .= '<img src="'.$img_url.'" />';
+									//$alt    = "The WordPress Logo";
+									//if ( $testing == "false" ) {
+										// TODO: check to see if img w/ same filename already exists in Media Library?
 									
-									// Add image to media library
-									$ml_img = media_sideload_image( $img_url, $post_id, $alt );
-									if ( is_wp_error( $ml_img ) ) {
-										$info .= "media_sideload_image error: ".$ml_img->get_error_message()."<br />";
-									} else {
-										$info .= $ml_img."<br />";
-										// Replace old relative url with link to newly-uploaded image
-									}
-								//}								
-							}
+										// Add image to media library
+										$ml_img = media_sideload_image( $img_url, $post_id, $alt );
+										if ( is_wp_error( $ml_img ) ) {
+											$info .= "media_sideload_image error: ".$ml_img->get_error_message()."<br />";
+										} else {
+											$info .= $ml_img."<br />";
+											// Replace old relative url with link to newly-uploaded image
+										}
+									//}								
+								}
+							}							
+							
 						}
 						$info .= "+++<br />";
     				}
