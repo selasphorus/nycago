@@ -252,10 +252,13 @@ function process_newsletters ( $atts = [] ) {
 					$headers = $response['headers']; // array of http header lines
 					$body = $response['body']; // use the content
 			
-					$html_content .= "<pre>";
-					$html_content .= print_r($headers, true);
-					$html_content .= "</pre>";
+					$info .= "<pre>";
+					$info .= print_r($headers, true);
+					$info .= "</pre>";
 					//$html_content .= $body;
+					
+					$last_modified = $headers->data['last-modified'];
+					$info .= "last_modified: ".$last_modified."<br />";
 					
 					// WIP/TODO: deal w/ relative URLs; import images into Media Library...
 					
