@@ -357,6 +357,9 @@ function process_newsletters ( $atts = [] ) {
 										// Does the current source start with a slash? If not, add one
 										if (!str_starts_with($src, '/')) {
 											$img_url .= "/";
+											if (!str_starts_with($src, 'Newsletter')) {
+												$img_url .= "Newsletter/";
+											}
 										}
 										$img_url .= $src;
 										//$info .= "img_url: ".$img_url."<br />";
