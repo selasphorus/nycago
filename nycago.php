@@ -263,11 +263,12 @@ function process_newsletters ( $atts = [] ) {
 					# Does the line contain any images? If so, extract and store the file info, alt tag...
             		//if ( $line =~ /(<img[^>]*src=[^>]*>)/ ) {} // pl
             		// Find all the image tags in the post content
-    				preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $body, $images);
+    				preg_match_all('/img.+src=[\'"]([^\'"]+)[\'"].*>/i', $body, $images);
+    				//preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $body, $images);
     				$info .= "Images:<br />";
     				// $images[0] contains actual image tags; $images[1] contains capture group -- filename
-    				//$info .= "<pre>".print_r($images, true)."</pre>";
-    				foreach ( $images[0] as $arr_img ) {
+    				$info .= "<pre>".print_r($images, true)."</pre>";
+    				/*foreach ( $images[0] as $arr_img ) {
     					$info .= "arr_img[0]: ".$arr_img[0]."<br />";
     					$info .= "<br />";
     				}
@@ -276,7 +277,7 @@ function process_newsletters ( $atts = [] ) {
     					//$info .= "arr_img count: ".count($arr_img)."<br />";
     					$info .= "arr_img[0]: ".$arr_img[0]."<br />";
     					$info .= "<br />";
-    				}
+    				}*/
 			
 				}			
 			}
