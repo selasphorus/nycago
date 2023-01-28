@@ -280,10 +280,11 @@ function process_newsletters ( $atts = [] ) {
     				foreach ( $images[1] as $img ) {
     					$info .= $img."<br />";
     					if ( preg_match('/src=[\'"]([^\'"]+)[\'"]/', $img, $src) ) {
-							$info .= "SRC:<pre>".print_r($src, true)."</pre>"; // tft
-							//$src = $matches[1];
+							//$info .= "SRC:<pre>".print_r($src, true)."</pre>"; // tft
+							$src = $matches[1];
+							$info .= "src: ".$src."<br />";
 						}
-						$info .= "<br />+++<br />";
+						$info .= "+++<br />";
     				}
 			
 				}			
