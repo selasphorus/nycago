@@ -267,7 +267,8 @@ function process_newsletters ( $atts = [] ) {
 					# Does the line contain any images? If so, extract and store the file info, alt tag...
             		//if ( $line =~ /(<img[^>]*src=[^>]*>)/ ) {} // pl
             		// Find all the image tags in the post content
-    				preg_match_all('/<(img.+src=[\'"][^\'"]+[\'"][^>]+)>/i', $body, $images);
+    				preg_match_all('/<img.+src=[\'"][^\'"]+[\'"][^>]+>/i', $body, $images);
+    				//preg_match_all('/<(img.+src=[\'"][^\'"]+[\'"][^>]+)>/i', $body, $images);
     				//preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $body, $images);
     				$info .= "Images:<br />";
     				// $images[0] contains actual image tags; $images[1] contains capture group -- filename
@@ -281,8 +282,9 @@ function process_newsletters ( $atts = [] ) {
     					//$info .= "<br />";
     				}*/
     				//
-    				foreach ( $images[1] as $img ) {
-    					$info .= $img."<br />";
+    				foreach ( $images as $img ) {
+    				//foreach ( $images[1] as $img ) {
+    					$info .= htmlspecialchars($img)."<br />";
     					// Get img alt, if any
     					if ( preg_match('/alt=[\'"]([^\'"]+)[\'"]/', $img, $alt) ) {
     						$alt = $alt[1];
@@ -301,11 +303,13 @@ function process_newsletters ( $atts = [] ) {
 								//$alt    = "The WordPress Logo";
 								if ( $testing == "false" ) {
 									// TODO: check to see if img w/ same filename already exists in Media Library?
+									// Add image to media library
 									$ml_img = media_sideload_image( $img_url, $post_id, $alt );
 									if ( is_wp_error( $ml_img ) ) {
 										$info .= "media_sideload_image error: ".$ml_img->get_error_message()."<br />";
 									} else {
 										$info .= $ml_img."<br />";
+										// Replace old relative url with link to newly-uploaded image
 									}
 								}
 								
