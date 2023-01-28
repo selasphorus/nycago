@@ -352,15 +352,23 @@ function process_newsletters ( $atts = [] ) {
 								
 									// Turn the path into an absolute URL and attempt to add remote image to Media Library
 									if ( !stripos($src,"http") ) {
-								
-										$img_url = "http://www.nycago.org".$src;
+										
+										$img_url = "http://www.nycago.org";
+										// Does the current source start with a slash? If not, add one
+										if (!str_starts_with($src, '/')) {
+											$img_url .= "/";
+										}
+										$img_url .= $src;
 										//$info .= "img_url: ".$img_url."<br />";
 										$info .= " [$img_url]<br />";
 						
 										// Add image to media library
 										$ml_img = media_sideload_image( $img_url, $post_id, $title, 'id' );
 										if ( is_wp_error( $ml_img ) ) {
-											$info .= "media_sideload_image error: ".$ml_img->get_error_message()."<br />";
+											$info .= '<span class="error">';
+											$info .= "media_sideload_image error: ".$ml_img->get_error_message();
+											$info .= '</span>';
+											$info .= "<br />";
 											$ml_img = null;
 										} else {
 											$info .= "Image added to Media Library. New attachment ID:".$ml_img."<br />";
