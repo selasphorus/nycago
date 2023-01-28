@@ -310,10 +310,12 @@ function process_newsletters ( $atts = [] ) {
 							$info .= "basename: ".$basename."<br />";
 							
 							// Check to see if file is in Newsletter subfolder -- e.g. /Newsletter/1611_files/article_one_1.jpg
-							// If so, make a new more specific filename -- e.g. NL_1611-article_one_1.jpg
+							// If so, make a new more specific filename -- e.g. NL1611-article_one_1.jpg
 							if ( preg_match('/\/Newsletter\/([0-9]+)_files/', $dirname, $nlid) ) {
 								$nlid = $nlid[1];
 								$info .= "nlid: ".$nlid."<br />";
+								$new_name = "NL".$nlid.$filename;
+								$info .= "new_name: ".$new_name."<br />";
 							}
 							
 							// Get img alt, if any
@@ -327,45 +329,29 @@ function process_newsletters ( $atts = [] ) {
     						
     						// Check if attachment already exists
     						if ( post_exists( $title,'','','attachment') ) {
-    						//if ( is_attachment($title) ) {
-    							$info .= "'".$title."' is already in the media library.<br />";
+    							
+    							$info .= "*** '".$title."' is already in the media library.<br />";
+    							
     						} else {
+    							
     							$info .= "'".$title."' is not yet in the media library.<br />";
-    						}
-							
-							/*
-							// check if attachment already exists
-							$attachment_args = array(
-								'posts_per_page' => 1,
-								'post_type'      => 'attachment',
-								'name'           => $filename
-							);
-							$attachment_check = new WP_Query( $attachment_args );
-							*/
-							/*
-							if ( $attachment_check->have_posts() ) {
-								$info .= $img_url." is already in the medial library<br />";
-							} else {
-								// Turn the path into an absolute URL and attempt to add remote image to Media Library
+    							
+    							// Turn the path into an absolute URL and attempt to add remote image to Media Library
 								if ( !stripos($src,"http") ) {
+								
 									$img_url = "http://www.nycago.org".$src;
 									$info .= "img_url: ".$img_url."<br />";
-									//$info .= '<img src="'.$img_url.'" />';
-									//$alt    = "The WordPress Logo";
-									//if ( $testing == "false" ) {
-										// TODO: check to see if img w/ same filename already exists in Media Library?
-									
-										// Add image to media library
-										$ml_img = media_sideload_image( $img_url, $post_id, $title );
-										if ( is_wp_error( $ml_img ) ) {
-											$info .= "media_sideload_image error: ".$ml_img->get_error_message()."<br />";
-										} else {
-											$info .= $ml_img."<br />";
-											// Replace old relative url with link to newly-uploaded image
-										}
-									//}								
+						
+									// Add image to media library
+									$ml_img = media_sideload_image( $img_url, $post_id, $title );
+									if ( is_wp_error( $ml_img ) ) {
+										$info .= "media_sideload_image error: ".$ml_img->get_error_message()."<br />";
+									} else {
+										$info .= $ml_img."<br />";
+										// Replace old relative url with link to newly-uploaded image
+									}					
 								}
-							}*/							
+    						}					
 							
 						}
 						$info .= "+++<br />";
