@@ -264,6 +264,12 @@ function process_newsletters ( $atts = [] ) {
 					# Does the line contain any hyperlinks? If so, extract the filename or link(s).
             		//if ( $line =~ /<a href=\"([^>\"]*)\"/ || $line =~ /<a name=\"([A-Za-z0-9]+)\"/) {} //pl
             		// Update relative URLs as needed... WIP
+            		// Process all image tags found in the post content
+    				preg_match_all('/<a.+href=[\'"]([^\'"]+)[\'"][^>]+>/i', $body, $links);
+    				$info .= "<h3>Links:</h3>";
+    				foreach ( $links[1] as $link ) {
+    					$info .= "link: ".$link."<br />";
+    				}
             		
             		// Process all image tags found in the post content
     				preg_match_all('/<img.+src=[\'"][^\'"]+[\'"][^>]+>/i', $body, $images);
@@ -355,6 +361,13 @@ function process_newsletters ( $atts = [] ) {
     				}
     				
 					// WIP -- Deal w/ anything that's not actually content/copy -- e.g. stylesheets
+					// <title
+					// <meta
+					// <link -- e.g. <link href="/styles/nycago.css" rel="stylesheet" type="text/css">
+					// <style
+					// <font
+					// etc???
+					
 					$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br />";
 					$info .= $body;
 					$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br /><br />";
