@@ -260,32 +260,14 @@ function process_newsletters ( $atts = [] ) {
 					$info .= "last_modified: ".$last_modified."<br />";
 					//$content_length = $headers['content-length'];
 					
-					// WIP/TODO: deal w/ relative URLs; import images into Media Library...
-					
-					// stylesheets
 					// urls
 					# Does the line contain any hyperlinks? If so, extract the filename or link(s).
             		//if ( $line =~ /<a href=\"([^>\"]*)\"/ || $line =~ /<a name=\"([A-Za-z0-9]+)\"/) {} //pl
+            		// Update relative URLs as needed... WIP
             		
-					// image tags
-					# Does the line contain any images? If so, extract and store the file info, alt tag...
-            		//if ( $line =~ /(<img[^>]*src=[^>]*>)/ ) {} // pl
-            		// Find all the image tags in the post content
+            		// Process all image tags found in the post content
     				preg_match_all('/<img.+src=[\'"][^\'"]+[\'"][^>]+>/i', $body, $images);
-    				//preg_match_all('/<(img.+src=[\'"][^\'"]+[\'"][^>]+)>/i', $body, $images);
-    				//preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $body, $images);
     				$info .= "<h3>Images:</h3>";
-    				// $images[0] contains actual image tags; $images[1] contains capture group -- filename
-    				//$info .= "<pre>".print_r($images, true)."</pre>";
-    				/*foreach ( $images as $img ) {
-    					$info .= "<pre>".print_r($img, true)."</pre>";
-    				}*/
-    				/*foreach ( $images[0] as $img ) {
-    					$info .= "<pre>".print_r($img, true)."</pre>";
-    					//$info .= "arr_img[0]: ".$arr_img[0]."<br />";
-    					//$info .= "<br />";
-    				}*/
-    				//
     				foreach ( $images[0] as $img ) {
     				
     					//$info .= "<pre>".print_r($img, true)."</pre>";
@@ -371,6 +353,11 @@ function process_newsletters ( $atts = [] ) {
 						}
 						$info .= "+++<br />";
     				}
+    				
+					// WIP -- Deal w/ anything that's not actually content/copy -- e.g. stylesheets
+					$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br />";
+					$info .= $body;
+					$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br /><br />";
 			
 				}			
 			}
@@ -379,7 +366,25 @@ function process_newsletters ( $atts = [] ) {
 		$info .= $html_content;
         
         // Save content (only if previously empty)
-	
+		/*
+		$data = array(
+			'ID' => $post_id,
+			'post_content' => $content,
+			'meta_input' => array(
+			'meta_key' => $meta_value,
+			'another_meta_key' => $another_meta_value
+		)
+		);
+
+		wp_update_post( $data, true );
+		if (is_wp_error($post_id)) { // ?? if (is_wp_error($data)) {
+			$errors = $post_id->get_error_messages();
+			foreach ($errors as $error) {
+				$info .= $error;
+			}
+		}
+        */
+        
         
         //$info .= $calc_info;
         $info .= "<br />";
