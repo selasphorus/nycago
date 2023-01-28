@@ -283,7 +283,7 @@ function process_newsletters ( $atts = [] ) {
 						} else {
 							$info .= "not a relative link<br />";
 						}
-						$info .= "<br />";
+						$info .= "<br />---<br />";
     				}
             		
             		// Process all image tags found in the post content
