@@ -325,7 +325,7 @@ function process_newsletters ( $atts = [] ) {
 									$nlid = $nlid[1];
 									//$info .= "nlid: ".$nlid."<br />";
 									$new_name = "NL".$nlid."-".$filename;
-									$info .= "new_name: ".$new_name."<br />";
+									//$info .= "new_name: ".$new_name."<br />";
 								} else {
 									$new_name = null;
 								}
@@ -342,25 +342,26 @@ function process_newsletters ( $atts = [] ) {
 								// Check if attachment already exists
 								if ( $ml_img = post_exists( $title,'','','attachment') ) {
 								
-									$info .= "<em>'".$title."' is already in the media library.</em><br />";
+									$info .= "<strong>'".$title."' is already in the media library.</strong>";
+									$info .= " ($filename/$new_name)<br />";
 								
 								} else {
 								
-									$info .= "'".$title."' is not yet in the media library.<br />";
+									$info .= "<strong>'".$title."' is not yet in the media library.</strong><br />";
 								
 									// Turn the path into an absolute URL and attempt to add remote image to Media Library
 									if ( !stripos($src,"http") ) {
 								
 										$img_url = "http://www.nycago.org".$src;
-										$info .= "img_url: ".$img_url."<br />";
+										//$info .= "img_url: ".$img_url."<br />";
 						
 										// Add image to media library
 										$ml_img = media_sideload_image( $img_url, $post_id, $title, 'id' );
 										if ( is_wp_error( $ml_img ) ) {
-											$info .= "media_sideload_image error: ".$ml_img->get_error_message()."<br />";
+											$info .= "media_sideload_image error: ".$ml_img->get_error_message()." [$img_url]<br />";
 											$ml_img = null;
 										} else {
-											$info .= "Image added to Media Library. New attachment ID:".$ml_img."<br />";
+											$info .= "Image added to Media Library. New attachment ID:".$ml_img." [$img_url]<br />";
 											$file = get_attached_file($ml_img);
 											$path = pathinfo($file);
 										
