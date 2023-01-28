@@ -321,7 +321,7 @@ function process_newsletters ( $atts = [] ) {
 								$info .= "alt: ".$alt."<br />";
 								$title = $alt;
 							} else {
-								$title = filename;
+								$title = $filename;
 							}
     						
     						// Check if attachment already exists
