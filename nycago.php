@@ -269,6 +269,11 @@ function process_newsletters ( $atts = [] ) {
     				$info .= "<h3>Links:</h3>";
     				foreach ( $links[1] as $link ) {
     					$info .= "link: ".$link."<br />";
+    					
+    					if ( stripos($link,"http") ) {
+    						$info .= stripos($link,"http");
+    					}
+    					
     					if ( !stripos($link,"http") ) {
 							$new_link = "http://www.nycago.org".$link;
 							$info .= ">> new_link: ".$new_link."<br />";
