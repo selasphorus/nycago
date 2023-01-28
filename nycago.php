@@ -273,8 +273,8 @@ function process_newsletters ( $atts = [] ) {
     					
     					preg_match('/http/', $link, $tmp);
 						if ( count($tmp) > 0 ) { 
-							$info .= "http found via preg_match<br />";
-							$info .= "not a relative link<br />";
+							$new_link = null;
+							$info .= "http found via preg_match (not a relative link)<br />";
 						} else {
 							$new_link = "http://www.nycago.org".$link;
 							$info .= ">> new_link: ".$new_link."<br />";
