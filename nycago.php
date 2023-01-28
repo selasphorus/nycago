@@ -284,7 +284,7 @@ function process_newsletters ( $atts = [] ) {
     				//
     				foreach ( $images as $img ) {
     				//foreach ( $images[1] as $img ) {
-    					$info .= htmlspecialchars($img)."<br />";
+    					//$info .= htmlspecialchars($img)."<br />";
     					// Get img alt, if any
     					if ( preg_match('/alt=[\'"]([^\'"]+)[\'"]/', $img, $alt) ) {
     						$alt = $alt[1];
