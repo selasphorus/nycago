@@ -279,6 +279,10 @@ function process_newsletters ( $atts = [] ) {
     				//
     				foreach ( $images[1] as $img ) {
     					$info .= $img."<br />";
+    					if ( preg_match('/src=[\'"]([^\'"]+)[\'"]/', $img, $matches) ) {
+							$info .= print_r($matches, true); // tft
+							//$src = $matches[1];
+						}
     				}
 			
 				}			
