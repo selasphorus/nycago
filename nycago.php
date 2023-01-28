@@ -284,8 +284,9 @@ function process_newsletters ( $atts = [] ) {
 							$src = $src[1];
 							$info .= "src: ".$src."<br />";
 							if ( !stripos($src,"http") ) {
-								$img_url = "http://www.nycago.org/".$src;
+								$img_url = "http://www.nycago.org".$src;
 								$info .= "img_url: ".$img_url."<br />";
+								$info .= '<img src="'.$img_url.'" />';
 							}
 						}
 						$info .= "+++<br />";
