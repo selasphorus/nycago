@@ -283,6 +283,13 @@ function process_newsletters ( $atts = [] ) {
     				//
     				foreach ( $images[1] as $img ) {
     					$info .= $img."<br />";
+    					// Get img alt, if any
+    					if ( preg_match('/alt=[\'"]([^\'"]+)[\'"]/', $img, $alt) ) {
+    						$alt = $alt[1];
+							$info .= "alt: ".$alt."<br />";
+    					}
+    					// TODO: deal w/ width and height? probably not necessary. Any other attributes of concern?
+    					// Get img src
     					if ( preg_match('/src=[\'"]([^\'"]+)[\'"]/', $img, $src) ) {
 							//$info .= "SRC:<pre>".print_r($src, true)."</pre>"; // tft
 							$src = $src[1];
@@ -291,13 +298,17 @@ function process_newsletters ( $atts = [] ) {
 								$img_url = "http://www.nycago.org".$src;
 								$info .= "img_url: ".$img_url."<br />";
 								//$info .= '<img src="'.$img_url.'" />';
-								//$desc    = "The WordPress Logo";
-								$ml_img = media_sideload_image( $img_url );
-								if ( is_wp_error( $ml_img ) ) {
-									$info .= "media_sideload_image error: ".$ml_img->get_error_message()."<br />";
-								} else {
-									$info .= $ml_img."<br />";
+								//$alt    = "The WordPress Logo";
+								if ( $testing == "false" ) {
+									// TODO: check to see if img w/ same filename already exists in Media Library?
+									$ml_img = media_sideload_image( $img_url, $post_id, $alt );
+									if ( is_wp_error( $ml_img ) ) {
+										$info .= "media_sideload_image error: ".$ml_img->get_error_message()."<br />";
+									} else {
+										$info .= $ml_img."<br />";
+									}
 								}
+								
 							}
 						}
 						$info .= "+++<br />";
