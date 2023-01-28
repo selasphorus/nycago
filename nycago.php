@@ -352,6 +352,7 @@ function process_newsletters ( $atts = [] ) {
 									$ml_img = media_sideload_image( $img_url, $post_id, $title, 'id' );
 									if ( is_wp_error( $ml_img ) ) {
 										$info .= "media_sideload_image error: ".$ml_img->get_error_message()."<br />";
+										$ml_img = null;
 									} else {
 										$info .= "Image added to Media Library. New attachment ID:".$ml_img."<br />";
 										$file = get_attached_file($ml_img);
