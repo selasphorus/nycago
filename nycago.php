@@ -321,7 +321,8 @@ function process_newsletters ( $atts = [] ) {
 							
 								// Check to see if file is in Newsletter subfolder -- e.g. /Newsletter/1611_files/article_one_1.jpg
 								// If so, make a new more specific filename -- e.g. NL1611-article_one_1.jpg
-								if ( preg_match('/\/Newsletter\/([0-9]+)_files/', $dirname, $nlid) ) {
+								if ( preg_match('/([0-9]+)_files/', $dirname, $nlid) ) {
+								//if ( preg_match('/\/Newsletter\/([0-9]+)_files/', $dirname, $nlid) ) {
 									$nlid = $nlid[1];
 									//$info .= "nlid: ".$nlid."<br />";
 									$new_name = "NL".$nlid."-".$filename;
