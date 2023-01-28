@@ -270,7 +270,7 @@ function process_newsletters ( $atts = [] ) {
     				preg_match_all('/<img.+src=[\'"][^\'"]+[\'"][^>]+>/i', $body, $images);
     				//preg_match_all('/<(img.+src=[\'"][^\'"]+[\'"][^>]+)>/i', $body, $images);
     				//preg_match_all('/<img.+src=[\'"]([^\'"]+)[\'"].*>/i', $body, $images);
-    				$info .= "Images:<br />";
+    				$info .= "<h3>Images:</h3>";
     				// $images[0] contains actual image tags; $images[1] contains capture group -- filename
     				//$info .= "<pre>".print_r($images, true)."</pre>";
     				/*foreach ( $images as $img ) {
@@ -283,9 +283,9 @@ function process_newsletters ( $atts = [] ) {
     				}*/
     				//
     				foreach ( $images[0] as $img ) {
-    				//foreach ( $images[1] as $img ) {
+    				
     					//$info .= "<pre>".print_r($img, true)."</pre>";
-    					$info .= htmlspecialchars($img)."<br />";
+    					//$info .= htmlspecialchars($img)."<br />";
     					
     					// Get img alt, if any
     					if ( preg_match('/alt=[\'"]([^\'"]+)[\'"]/', $img, $alt) ) {
