@@ -412,7 +412,7 @@ function process_newsletters ( $atts = [] ) {
 						// WIP -- Deal w/ anything that's not actually content/copy -- e.g. stylesheets
 						// <title
 						preg_match('/<title[^>]+>([^<]+)<\\title>/i', $body, $title);
-						$html_title = $title[1];
+						//$html_title = $title[1];
 						// <meta
 						preg_match_all('/<meta[^>]+>/i', $body, $meta);
 						//html_meta
@@ -421,17 +421,19 @@ function process_newsletters ( $atts = [] ) {
 						//html_links
 						// <style
 						preg_match('/<style[^>]+>([^<]+)<\\style>/i', $body, $css);
-						$html_css = $css[1];
+						//$html_css = $css[1];
 						// <font
 						// etc???
 						
 						//$update_title = update_post_meta( $id, 'html_title', wp_slash( $html_title ) );
 					
 						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br />";
-						$info .= "html_title: $html_title<br />";
+						//$info .= "html_title: $html_title<br />";
+						$info .= "title: ".print_r($title,true)."<br />";
 						$info .= "meta: ".print_r($meta,true)."<br />";
 						$info .= "links: ".print_r($links,true)."<br />";
-						$info .= "css: <pre>".$html_css."</pre><br />";
+						$info .= "css: ".print_r($css,true)."<br />";
+						//$info .= "css: <pre>".$html_css."</pre><br />";
 						//$info .= $body;
 						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br /><br />";
 					}
