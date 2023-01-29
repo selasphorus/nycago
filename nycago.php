@@ -438,7 +438,7 @@ function process_newsletters ( $atts = [] ) {
 						
 						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br />";
 						// TODO: figure out how to display HTML as code, not have tags act as tags
-						$info .= "title: <code>".print_r($title[1],true)."</code><br />";
+						$info .= "title: <code>".print_r($title,true)."</code><br />";
 						//$info .= "meta: ".print_r($meta,true)."<br />";
 						$info .= "links: ".print_r($links,true)."<br />";
 						$info .= "css: ".print_r($css,true)."<br />";
