@@ -417,11 +417,11 @@ function process_newsletters ( $atts = [] ) {
 						//preg_match_all('/<meta[^>]+>/i', $html_content, $meta);
 						// <link -- e.g. <link href="/styles/nycago.css" rel="stylesheet" type="text/css">
 						//preg_match_all('/<link[^>]+>/i', $html_content, $links);
-						preg_match_all('/<link.+href([^>])+>/i', $html_content, $header_links);
+						preg_match_all('/<link.+href=[\'"]([^\'"]+)[\'"][^>]+>/i', $html_content, $header_links);
 						//html_links
 						// <style
 						preg_match('/<style[^>]+>(.*?)<\/style>/is', $html_content, $css);
-						//$html_css = $css[1];
+						$html_css = $css[1];
 						// <font
 						// etc???
 						
@@ -433,6 +433,9 @@ function process_newsletters ( $atts = [] ) {
 						}
 						if ( update_post_meta( $post_id, 'html_content', wp_slash( $html_content ) ) ) {
 							$info .= "Update OK for html_content postmeta<br />";
+						}
+						if ( update_post_meta( $post_id, 'html_css', wp_slash( $html_css ) ) ) {
+							$info .= "Update OK for html_css postmeta<br />";
 						}
 						//$update_title = update_post_meta( $post_id, 'html_title', wp_slash( $html_title ) );
 						
