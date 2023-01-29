@@ -256,6 +256,11 @@ function process_newsletters ( $atts = [] ) {
 			
 				// @var array|WP_Error $response
 				$response = wp_remote_get( $url);
+				
+				$remote_content = wp_remote_fopen( $url );
+				if ( is_wp_error( $remote_content ) ) {
+					$info .= "remote_content: <pre>".print_r($remote_content,true)."</pre><br />";
+				}
 
 				if ( is_array( $response ) && ! is_wp_error( $response ) ) {
 			
@@ -442,7 +447,7 @@ function process_newsletters ( $atts = [] ) {
 			}
 		}
 		
-		$info .= $html_content;
+		//$info .= $html_content;
         
         // Save content (only if previously empty)
 		/*
