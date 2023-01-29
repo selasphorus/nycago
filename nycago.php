@@ -444,13 +444,15 @@ function process_newsletters ( $atts = [] ) {
 							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
 						}
 						//$info .= "meta: ".print_r($meta,true)."<br />";
+						$info .= "links:<br />";
 						//$info .= "links: ".print_r($links,true)."<br />";
 						foreach ( $links as $i => $tmp ) {
-							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
+							if (!empty($tmp)) { $info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />"; }
 						}
+						$info .= "css:<br />";
 						//$info .= "css: ".print_r($css,true)."<br />";
 						foreach ( $css as $i => $tmp ) {
-							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
+							if (!empty($tmp)) { $info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />"; }
 						}
 						//$info .= $html_content;
 						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br /><br />";
