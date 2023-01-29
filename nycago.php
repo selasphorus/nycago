@@ -417,7 +417,8 @@ function process_newsletters ( $atts = [] ) {
 						preg_match_all('/<meta[^>]+>/i', $html_content, $meta);
 						//html_meta
 						// <link -- e.g. <link href="/styles/nycago.css" rel="stylesheet" type="text/css">
-						preg_match_all('/<link[^>]+>/i', $html_content, $links);
+						//preg_match_all('/<link[^>]+>/i', $html_content, $links);
+						preg_match_all('/<.+href([^>])+>/i', $html_content, $links);
 						//html_links
 						// <style
 						preg_match('/<style[^>]+>(.*?)<\/style>/is', $html_content, $css);
