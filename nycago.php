@@ -414,8 +414,7 @@ function process_newsletters ( $atts = [] ) {
 						preg_match('/<title>(.*)<\/title>/i', $html_content, $title);
 						$html_title = $title[1];
 						// <meta
-						preg_match_all('/<meta[^>]+>/i', $html_content, $meta);
-						//html_meta
+						//preg_match_all('/<meta[^>]+>/i', $html_content, $meta);
 						// <link -- e.g. <link href="/styles/nycago.css" rel="stylesheet" type="text/css">
 						//preg_match_all('/<link[^>]+>/i', $html_content, $links);
 						preg_match_all('/<.+href([^>])+>/i', $html_content, $links);
@@ -438,9 +437,9 @@ function process_newsletters ( $atts = [] ) {
 						//$update_title = update_post_meta( $post_id, 'html_title', wp_slash( $html_title ) );
 						
 						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br />";
-						//$info .= "html_title: $html_title<br />";
-						$info .= "title: ".print_r($title,true)."<br />";
-						$info .= "meta: ".print_r($meta,true)."<br />";
+						// TODO: figure out how to display HTML as code, not have tags act as tags
+						$info .= "title: <code>".print_r($title[1],true)."</code><br />";
+						//$info .= "meta: ".print_r($meta,true)."<br />";
 						$info .= "links: ".print_r($links,true)."<br />";
 						$info .= "css: ".print_r($css,true)."<br />";
 						//$info .= "css: <pre>".$html_css."</pre><br />";
