@@ -411,7 +411,7 @@ function process_newsletters ( $atts = [] ) {
     				
 						// WIP -- Deal w/ anything that's not actually content/copy -- e.g. stylesheets
 						// <title
-						preg_match('/<title[^>]+>([^<]+)<\\title>/i', $body, $title);
+						preg_match('/<title>(.*)<\/title>/i', $body, $title);
 						//$html_title = $title[1];
 						// <meta
 						preg_match_all('/<meta[^>]+>/i', $body, $meta);
@@ -420,7 +420,7 @@ function process_newsletters ( $atts = [] ) {
 						preg_match_all('/<link[^>]+>/i', $body, $links);
 						//html_links
 						// <style
-						preg_match('/<style[^>]+>([^<]+)<\\style>/i', $body, $css);
+						preg_match('/<style[^>]+>(.*?)<\/style>/is', $body, $css);
 						//$html_css = $css[1];
 						// <font
 						// etc???
