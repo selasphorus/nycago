@@ -440,13 +440,18 @@ function process_newsletters ( $atts = [] ) {
 						// TODO: figure out how to display HTML as code, not have tags act as tags
 						//$info .= "title: <code>".print_r($title,true)."</code><br />";
 						$info .= "title:<br />";
-						foreach ( $title as $tmp ) {
-							$info .= "<code>".htmlspecialchars($tmp)."</code><br />";
+						foreach ( $title as $i => $tmp ) {
+							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
 						}
 						//$info .= "meta: ".print_r($meta,true)."<br />";
-						$info .= "links: ".print_r($links,true)."<br />";
-						$info .= "css: ".print_r($css,true)."<br />";
-						//$info .= "css: <pre>".$html_css."</pre><br />";
+						//$info .= "links: ".print_r($links,true)."<br />";
+						foreach ( $links as $i => $tmp ) {
+							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
+						}
+						//$info .= "css: ".print_r($css,true)."<br />";
+						foreach ( $css as $i => $tmp ) {
+							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
+						}
 						//$info .= $html_content;
 						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br /><br />";
 					}
