@@ -257,14 +257,6 @@ function process_newsletters ( $atts = [] ) {
 				// @var array|WP_Error $response
 				$response = wp_remote_get( $url);
 				
-				$remote_content = wp_remote_fopen( $url );
-				$info .= "remote_content: <pre>".print_r($remote_content,true)."</pre><br />";
-				/*if ( !is_wp_error( $remote_content ) ) {
-					$info .= "remote_content: <pre>".print_r($remote_content,true)."</pre><br />";
-				} else {
-					$info .= "remote_content error: ".$remote_content->get_error_message();
-				}*/
-				
 				if ( is_array( $response ) && ! is_wp_error( $response ) ) {
 			
 					$headers = $response['headers']; // array of http header lines -- protected object
@@ -277,7 +269,7 @@ function process_newsletters ( $atts = [] ) {
 					$info .= "last_modified: ".$last_modified."<br />";
 					//$content_length = $headers['content-length'];
 					
-					if ( $do_links || $do_content ) {
+					if ( $do_links ) { // || $do_content
 						// Process all hyperlinks found in the post content
 						preg_match_all('/<a.+href=[\'"]([^\'"]+)[\'"][^>]+>/i', $body, $links);
 						$info .= "<h3>Links:</h3>";
@@ -299,7 +291,7 @@ function process_newsletters ( $atts = [] ) {
 						}
 					}
             		
-            		if ( $do_images || $do_content ) {
+            		if ( $do_images ) { // || $do_content
             			// Process all image tags found in the post content
 						preg_match_all('/<img.+src=[\'"][^\'"]+[\'"][^>]+>/i', $body, $images);
 						$info .= "<h3>Images:</h3>";
@@ -434,7 +426,10 @@ function process_newsletters ( $atts = [] ) {
 						// etc???
 						
 						//$update_title = update_post_meta( $id, 'html_title', wp_slash( $html_title ) );
-					
+						
+						$update_html_bk = update_post_meta( $id, 'html_bk', wp_slash( $body ) );
+						//$update_html_bk = update_post_meta( $id, 'html_bk', $body );
+						
 						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br />";
 						//$info .= "html_title: $html_title<br />";
 						$info .= "title: ".print_r($title,true)."<br />";
