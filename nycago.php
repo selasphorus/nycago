@@ -260,10 +260,10 @@ function process_newsletters ( $atts = [] ) {
 				if ( is_array( $response ) && ! is_wp_error( $response ) ) {
 			
 					$headers = $response['headers']; // array of http header lines -- protected object
-					$body = $response['body']; // use the content					
-			
+					$body = $response['body']; // use the content
+					$html_content = $body; // Make a copy -- this one we'll clean up, fix links &c.
+					
 					//$info .= "<pre>".print_r($headers, true)."</pre>";
-					//$html_content .= $body;
 					
 					$last_modified = $headers['last-modified'];
 					$info .= "last_modified: ".$last_modified."<br />";
@@ -271,7 +271,7 @@ function process_newsletters ( $atts = [] ) {
 					
 					if ( $do_links ) { // || $do_content
 						// Process all hyperlinks found in the post content
-						preg_match_all('/<a.+href=[\'"]([^\'"]+)[\'"][^>]+>/i', $body, $links);
+						preg_match_all('/<a.+href=[\'"]([^\'"]+)[\'"][^>]+>/i', $html_content, $links);
 						$info .= "<h3>Links:</h3>";
 						foreach ( $links[1] as $link ) {
 					
@@ -285,7 +285,7 @@ function process_newsletters ( $atts = [] ) {
 								$new_link = "http://www.nycago.org".$link;
 								$info .= ">> new_link: ".$new_link."<br />";
 								// Replace old link w/ new in body
-								$body = str_replace($link,$new_link,$body);
+								$html_content = str_replace($link,$new_link,$html_content);
 							}
 							$info .= "---<br />";
 						}
@@ -293,7 +293,7 @@ function process_newsletters ( $atts = [] ) {
             		
             		if ( $do_images ) { // || $do_content
             			// Process all image tags found in the post content
-						preg_match_all('/<img.+src=[\'"][^\'"]+[\'"][^>]+>/i', $body, $images);
+						preg_match_all('/<img.+src=[\'"][^\'"]+[\'"][^>]+>/i', $html_content, $images);
 						$info .= "<h3>Images:</h3>";
 						foreach ( $images[0] as $img ) {
 						
@@ -396,7 +396,7 @@ function process_newsletters ( $atts = [] ) {
 									$ml_src = str_replace("https://samb71.sg-host.com","",$ml_src);
 									$img_info .= "ml_src: ".$ml_src."<br />";
 									// Replace old relative url with link to newly-uploaded image
-									$body = str_replace($src,$ml_src,$body);
+									$html_content = str_replace($src,$ml_src,$html_content);
 								}			
 							
 							}
@@ -411,23 +411,30 @@ function process_newsletters ( $atts = [] ) {
     				
 						// WIP -- Deal w/ anything that's not actually content/copy -- e.g. stylesheets
 						// <title
-						preg_match('/<title>(.*)<\/title>/i', $body, $title);
+						preg_match('/<title>(.*)<\/title>/i', $html_content, $title);
 						$html_title = $title[1];
 						// <meta
-						preg_match_all('/<meta[^>]+>/i', $body, $meta);
+						preg_match_all('/<meta[^>]+>/i', $html_content, $meta);
 						//html_meta
 						// <link -- e.g. <link href="/styles/nycago.css" rel="stylesheet" type="text/css">
-						preg_match_all('/<link[^>]+>/i', $body, $links);
+						preg_match_all('/<link[^>]+>/i', $html_content, $links);
 						//html_links
 						// <style
-						preg_match('/<style[^>]+>(.*?)<\/style>/is', $body, $css);
+						preg_match('/<style[^>]+>(.*?)<\/style>/is', $html_content, $css);
 						//$html_css = $css[1];
 						// <font
 						// etc???
 						
-						$update_html_bk = update_post_meta( $post_id, 'html_bk', wp_slash( $body ) );
-						//$update_html_bk = update_post_meta( $id, 'html_bk', $body );
-						$update_title = update_post_meta( $post_id, 'html_title', wp_slash( $html_title ) );
+						if ( update_post_meta( $post_id, 'html_bk', wp_slash( $body ) ) ) {
+							$info .= "Update OK for html_bk postmeta<br />";
+						}
+						if ( update_post_meta( $post_id, 'html_title', wp_slash( $html_title ) ) ) {
+							$info .= "Update OK for html_title postmeta<br />";
+						}
+						if ( update_post_meta( $post_id, 'html_content', wp_slash( $html_content ) ) ) {
+							$info .= "Update OK for html_content postmeta<br />";
+						}
+						//$update_title = update_post_meta( $post_id, 'html_title', wp_slash( $html_title ) );
 						
 						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br />";
 						//$info .= "html_title: $html_title<br />";
@@ -436,7 +443,7 @@ function process_newsletters ( $atts = [] ) {
 						$info .= "links: ".print_r($links,true)."<br />";
 						$info .= "css: ".print_r($css,true)."<br />";
 						//$info .= "css: <pre>".$html_css."</pre><br />";
-						//$info .= $body;
+						//$info .= $html_content;
 						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br /><br />";
 					}
 			
