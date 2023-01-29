@@ -447,7 +447,13 @@ function process_newsletters ( $atts = [] ) {
 						$info .= "links:<br />";
 						//$info .= "links: ".print_r($links,true)."<br />";
 						foreach ( $links as $i => $tmp ) {
-							if (!empty($tmp)) { $info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />"; }
+							if (!empty($tmp)) { 
+								if (!is_array($tmp)) { 
+									$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
+								} else {
+									$info .= "[$i] <code>".vardump($tmp)."</code><br />";
+								}
+							}
 						}
 						$info .= "css:<br />";
 						//$info .= "css: ".print_r($css,true)."<br />";
