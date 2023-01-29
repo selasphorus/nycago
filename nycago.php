@@ -451,7 +451,7 @@ function process_newsletters ( $atts = [] ) {
 								if (!is_array($tmp)) { 
 									$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
 								} else {
-									$info .= "[$i] <code>".vardump($tmp)."</code><br />";
+									$info .= "[$i] <code>".htmlspecialchars(print_r($tmp, true))."</code><br />";
 								}
 							}
 						}
