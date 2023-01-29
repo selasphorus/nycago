@@ -439,23 +439,25 @@ function process_newsletters ( $atts = [] ) {
 						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br />";
 						// TODO: figure out how to display HTML as code, not have tags act as tags
 						//$info .= "title: <code>".print_r($title,true)."</code><br />";
-						$info .= "title:<br />";
+						$info .= "<h4>title:</h4>";
 						foreach ( $title as $i => $tmp ) {
 							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
 						}
 						//$info .= "meta: ".print_r($meta,true)."<br />";
-						$info .= "links:<br />";
+						$info .= "<h4>links:</h4>";
 						//$info .= "links: ".print_r($links,true)."<br />";
 						foreach ( $links as $i => $tmp ) {
 							if (!empty($tmp)) { 
 								if (!is_array($tmp)) { 
 									$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
 								} else {
-									$info .= "[$i] <code>".htmlspecialchars(print_r($tmp, true))."</code><br />";
+									foreach ( $tmp as $k => $v ) {
+										$info .= "[$i/$k] <code>".htmlspecialchars($v)."</code><br />";
+									}
 								}
 							}
 						}
-						$info .= "css:<br />";
+						$info .= "<h4>css:</h4>";
 						//$info .= "css: ".print_r($css,true)."<br />";
 						foreach ( $css as $i => $tmp ) {
 							if (!empty($tmp)) { $info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />"; }
