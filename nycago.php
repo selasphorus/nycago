@@ -269,7 +269,7 @@ function process_newsletters ( $atts = [] ) {
 					$info .= "last_modified: ".$last_modified."<br />";
 					//$content_length = $headers['content-length'];
 					
-					if ( $do_links ) {
+					if ( $do_links || $do_content ) {
 						// Process all hyperlinks found in the post content
 						preg_match_all('/<a.+href=[\'"]([^\'"]+)[\'"][^>]+>/i', $body, $links);
 						$info .= "<h3>Links:</h3>";
@@ -291,7 +291,7 @@ function process_newsletters ( $atts = [] ) {
 						}
 					}
             		
-            		if ( $do_images ) {
+            		if ( $do_images || $do_content ) {
             			// Process all image tags found in the post content
 						preg_match_all('/<img.+src=[\'"][^\'"]+[\'"][^>]+>/i', $body, $images);
 						$info .= "<h3>Images:</h3>";
@@ -342,13 +342,13 @@ function process_newsletters ( $atts = [] ) {
 								// Check if attachment already exists
 								if ( $ml_img = post_exists( $title,'','','attachment') ) {
 								
-									$info .= "<strong>'".$title."' is already in the media library.</strong>";
-									if ( $new_name ) { $info .= " ($filename/$new_name)"; }
-									$info .= "<br />";
+									$img_info .= "<strong>'".$title."' is already in the media library.</strong>";
+									if ( $new_name ) { $img_info .= " ($filename/$new_name)"; }
+									$img_info .= "<br />";
 								
 								} else {
 								
-									$info .= "<strong>'".$title."' is not yet in the media library.</strong>";
+									$img_info .= "<strong>'".$title."' is not yet in the media library.</strong>";
 								
 									// Turn the path into an absolute URL and attempt to add remote image to Media Library
 									if ( !stripos($src,"http") ) {
@@ -363,15 +363,15 @@ function process_newsletters ( $atts = [] ) {
 										}
 										$img_url .= $src;
 										//$info .= "img_url: ".$img_url."<br />";
-										$info .= " [$img_url]<br />";
+										$img_info .= " [$img_url]<br />";
 						
 										// Add image to media library
 										$ml_img = media_sideload_image( $img_url, $post_id, $title, 'id' );
 										if ( is_wp_error( $ml_img ) ) {
-											$info .= '<span class="error">';
-											$info .= "media_sideload_image error: ".$ml_img->get_error_message();
-											$info .= '</span>';
-											$info .= "<br />";
+											$img_info .= '<span class="error">';
+											$img_info .= "media_sideload_image error: ".$ml_img->get_error_message();
+											$img_info .= '</span>';
+											$img_info .= "<br />";
 											$ml_img = null;
 										} else {
 											$info .= "Image added to Media Library. New attachment ID: ".$ml_img."<br />";
@@ -381,7 +381,7 @@ function process_newsletters ( $atts = [] ) {
 											// If we've got a new_name, update the new attachment accordingly
 											if ( $new_name && $new_name != $filename ) {
 												$newfile = $path['dirname']."/".$new_name.".".$path['extension'];
-												$info .= "file: $file/newfile: $newfile<br />";
+												$img_info .= "file: $file/newfile: $newfile<br />";
 												rename($file, $newfile);    
 												update_attached_file( $ml_img, $newfile );
 											}
@@ -394,29 +394,45 @@ function process_newsletters ( $atts = [] ) {
 									$ml_src = wp_get_attachment_image_url($ml_img, 'full');
 									// make it a relative link
 									$ml_src = str_replace("https://samb71.sg-host.com","",$ml_src);
-									$info .= "ml_src: ".$ml_src."<br />";
+									$img_info .= "ml_src: ".$ml_src."<br />";
 									// Replace old relative url with link to newly-uploaded image
 									$body = str_replace($src,$ml_src,$body);
 								}			
 							
 							}
 							
+							if ( $do_images ) { $info .= $img_info; }
 							$info .= '</div>';
 							//$info .= "+++<br />";
 						}
             		}
             		
     				if ( $do_content ) {
+    				
 						// WIP -- Deal w/ anything that's not actually content/copy -- e.g. stylesheets
 						// <title
+						preg_match('/<title[^>]+>([^<]+)<\\title>/i', $body, $title);
+						$html_title = $title[1];
 						// <meta
+						preg_match_all('/<meta[^>]+>/i', $body, $meta);
+						//html_meta
 						// <link -- e.g. <link href="/styles/nycago.css" rel="stylesheet" type="text/css">
+						preg_match_all('/<link[^>]+>/i', $body, $links);
+						//html_links
 						// <style
+						preg_match('/<style[^>]+>([^<]+)<\\style>/i', $body, $css);
+						$html_css = $css[1];
 						// <font
 						// etc???
+						
+						$update_title = update_post_meta( $id, 'html_title', wp_slash( $html_title ) );
 					
 						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br />";
-						$info .= $body;
+						$info .= "html_title: $html_title<br />";
+						$info .= "meta: ".print_r($meta,true)."<br />";
+						$info .= "links: ".print_r($links,true)."<br />";
+						$info .= "css: <pre>".$html_css."</pre><br />";
+						//$info .= $body;
 						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br /><br />";
 					}
 			
