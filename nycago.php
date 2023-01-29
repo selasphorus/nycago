@@ -417,7 +417,7 @@ function process_newsletters ( $atts = [] ) {
 						//preg_match_all('/<meta[^>]+>/i', $html_content, $meta);
 						// <link -- e.g. <link href="/styles/nycago.css" rel="stylesheet" type="text/css">
 						//preg_match_all('/<link[^>]+>/i', $html_content, $links);
-						preg_match_all('/<.+href([^>])+>/i', $html_content, $links);
+						preg_match_all('/<link.+href([^>])+>/i', $html_content, $header_links);
 						//html_links
 						// <style
 						preg_match('/<style[^>]+>(.*?)<\/style>/is', $html_content, $css);
@@ -444,13 +444,13 @@ function process_newsletters ( $atts = [] ) {
 							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
 						}
 						//$info .= "meta: ".print_r($meta,true)."<br />";
-						$info .= "<h4>links[0]:</h4>";
+						$info .= "<h4>header_links[0]:</h4>";
 						//$info .= "links: ".print_r($links,true)."<br />";
-						foreach ( $links[0] as $i => $tmp ) {
+						foreach ( $header_links[0] as $i => $tmp ) {
 							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
 						}
-						$info .= "<h4>links[1]:</h4>";
-						foreach ( $links[1] as $i => $tmp ) {
+						$info .= "<h4>header_links[1]:</h4>";
+						foreach ( $header_links[1] as $i => $tmp ) {
 							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
 						}
 						/*foreach ( $links as $i => $tmp ) {
