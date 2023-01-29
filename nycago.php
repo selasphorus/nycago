@@ -444,9 +444,16 @@ function process_newsletters ( $atts = [] ) {
 							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
 						}
 						//$info .= "meta: ".print_r($meta,true)."<br />";
-						$info .= "<h4>links:</h4>";
+						$info .= "<h4>links[0]:</h4>";
 						//$info .= "links: ".print_r($links,true)."<br />";
-						foreach ( $links as $i => $tmp ) {
+						foreach ( $links[0] as $i => $tmp ) {
+							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
+						}
+						$info .= "<h4>links[1]:</h4>";
+						foreach ( $links[1] as $i => $tmp ) {
+							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
+						}
+						/*foreach ( $links as $i => $tmp ) {
 							if (!empty($tmp)) { 
 								if (!is_array($tmp)) { 
 									$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
@@ -456,7 +463,7 @@ function process_newsletters ( $atts = [] ) {
 									}
 								}
 							}
-						}
+						}*/
 						$info .= "<h4>css:</h4>";
 						//$info .= "css: ".print_r($css,true)."<br />";
 						foreach ( $css as $i => $tmp ) {
