@@ -412,7 +412,7 @@ function process_newsletters ( $atts = [] ) {
 						// WIP -- Deal w/ anything that's not actually content/copy -- e.g. stylesheets
 						// <title
 						preg_match('/<title>(.*)<\/title>/i', $body, $title);
-						//$html_title = $title[1];
+						$html_title = $title[1];
 						// <meta
 						preg_match_all('/<meta[^>]+>/i', $body, $meta);
 						//html_meta
@@ -425,10 +425,9 @@ function process_newsletters ( $atts = [] ) {
 						// <font
 						// etc???
 						
-						//$update_title = update_post_meta( $id, 'html_title', wp_slash( $html_title ) );
-						
-						$update_html_bk = update_post_meta( $id, 'html_bk', wp_slash( $body ) );
+						$update_html_bk = update_post_meta( $post_id, 'html_bk', wp_slash( $body ) );
 						//$update_html_bk = update_post_meta( $id, 'html_bk', $body );
+						$update_title = update_post_meta( $post_id, 'html_title', wp_slash( $html_title ) );
 						
 						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br />";
 						//$info .= "html_title: $html_title<br />";
