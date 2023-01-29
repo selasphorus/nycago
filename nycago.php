@@ -441,7 +441,7 @@ function process_newsletters ( $atts = [] ) {
 						//$info .= "title: <code>".print_r($title,true)."</code><br />";
 						$info .= "title:<br />";
 						foreach ( $title as $tmp ) {
-							$info .= "<pre>".$tmp."</pre><br />";
+							$info .= "<code>".htmlspecialchars($tmp)."</code><br />";
 						}
 						//$info .= "meta: ".print_r($meta,true)."<br />";
 						$info .= "links: ".print_r($links,true)."<br />";
