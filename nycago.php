@@ -425,7 +425,7 @@ function process_newsletters ( $atts = [] ) {
 						// <font
 						// etc???
 						
-						$update_title = update_post_meta( $id, 'html_title', wp_slash( $html_title ) );
+						//$update_title = update_post_meta( $id, 'html_title', wp_slash( $html_title ) );
 					
 						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br />";
 						$info .= "html_title: $html_title<br />";
