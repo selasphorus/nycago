@@ -271,7 +271,7 @@ function process_newsletters ( $atts = [] ) {
 					
 					if ( $do_links || $do_content ) { //
 						// Process all hyperlinks found in the post content
-						preg_match_all('/<a.+href=[\'"]([^\'"]+)[\'"][^>]+>/i', $html_content, $links);
+						preg_match_all('/<.+href=[\'"]([^\'"]+)[\'"][^>]+>/i', $html_content, $links);
 						$info .= "<h3>Links:</h3>";
 						foreach ( $links[1] as $link ) {
 					
