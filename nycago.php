@@ -269,7 +269,7 @@ function process_newsletters ( $atts = [] ) {
 					$info .= "last_modified: ".$last_modified."<br />";
 					//$content_length = $headers['content-length'];
 					
-					if ( $do_links ) { // || $do_content
+					if ( $do_links || $do_content ) { //
 						// Process all hyperlinks found in the post content
 						preg_match_all('/<a.+href=[\'"]([^\'"]+)[\'"][^>]+>/i', $html_content, $links);
 						$info .= "<h3>Links:</h3>";
@@ -291,7 +291,7 @@ function process_newsletters ( $atts = [] ) {
 						}
 					}
             		
-            		if ( $do_images ) { // || $do_content
+            		if ( $do_images || $do_content ) { //
             			// Process all image tags found in the post content
 						preg_match_all('/<img.+src=[\'"][^\'"]+[\'"][^>]+>/i', $html_content, $images);
 						$info .= "<h3>Images:</h3>";
