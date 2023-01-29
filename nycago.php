@@ -258,11 +258,12 @@ function process_newsletters ( $atts = [] ) {
 				$response = wp_remote_get( $url);
 				
 				$remote_content = wp_remote_fopen( $url );
-				if ( is_wp_error( $remote_content ) ) {
+				$info .= "remote_content: <pre>".print_r($remote_content,true)."</pre><br />";
+				/*if ( !is_wp_error( $remote_content ) ) {
 					$info .= "remote_content: <pre>".print_r($remote_content,true)."</pre><br />";
 				} else {
-					$img_info .= "remote_content error: ".$remote_content->get_error_message();
-				}
+					$info .= "remote_content error: ".$remote_content->get_error_message();
+				}*/
 				
 				if ( is_array( $response ) && ! is_wp_error( $response ) ) {
 			
