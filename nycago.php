@@ -423,29 +423,29 @@ function process_newsletters ( $atts = [] ) {
 						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br />";
 						// TODO: figure out how to display HTML as code, not have tags act as tags
 						//$info .= "title: <code>".print_r($title,true)."</code><br />";
-						$info .= "<h4>title:</h4>";
+						//$info .= "<h4>title:</h4>";
 						foreach ( $title as $i => $tmp ) {
 							//$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
 						}
 						
 						//$info .= "meta: ".print_r($meta,true)."<br />";
-						$info .= "<h4>meta[0]:</h4>";
+						//$info .= "<h4>meta[0]:</h4>";
 						foreach ( $meta[0] as $i => $tmp ) {
 							//$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
 						}
-						$info .= "<h4>meta[1]:</h4>";
+						//$info .= "<h4>meta[1]:</h4>";
 						$html_meta = "";
 						foreach ( $meta[1] as $i => $tmp ) {
 							//$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
 							$html_meta .= $tmp."\n";
 						}
 						
-						$info .= "<h4>header_links[0]:</h4>";
+						//$info .= "<h4>header_links[0]:</h4>";
 						//$info .= "links: ".print_r($links,true)."<br />";
 						foreach ( $header_links[0] as $i => $tmp ) {
 							//$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
 						}
-						$info .= "<h4>header_links[1]:</h4>";
+						//$info .= "<h4>header_links[1]:</h4>";
 						$html_stylesheet = "";
 						foreach ( $header_links[1] as $i => $tmp ) {
 							//$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
@@ -462,10 +462,10 @@ function process_newsletters ( $atts = [] ) {
 								}
 							}
 						}*/
-						$info .= "<h4>css:</h4>";
+						//$info .= "<h4>css:</h4>";
 						//$info .= "css: ".print_r($css,true)."<br />";
 						foreach ( $css as $i => $tmp ) {
-							if (!empty($tmp)) { $info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />"; }
+							//if (!empty($tmp)) { $info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />"; }
 						}
 						//$info .= $html_content;
 						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br /><br />";
