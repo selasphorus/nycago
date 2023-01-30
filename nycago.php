@@ -471,44 +471,42 @@ function process_newsletters ( $atts = [] ) {
 						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br /><br />";
 						
 						// Run the post_meta updates
-						if ( update_post_meta( $post_id, 'html_last_modified', $html_last_modified ) ) {
 						//if ( update_post_meta( $post_id, 'html_last_modified', wp_slash( $html_last_modified ) ) ) {
+						if ( update_post_meta( $post_id, 'html_last_modified', $html_last_modified ) ) {
 							$info .= "Update OK for html_last_modified postmeta<br />";
 						} else {
-							$info .= "ERROR updating html_last_modified postmeta<br />";
+							//$info .= "ERROR updating html_last_modified postmeta<br />";
 						}
 						if ( update_post_meta( $post_id, 'html_title', wp_slash( $html_title ) ) ) {
 							$info .= "Update OK for html_title postmeta<br />";
 						} else {
-							$info .= "ERROR updating html_title postmeta<br />";
+							//$info .= "ERROR updating html_title postmeta<br />";
 						}
 						if ( update_post_meta( $post_id, 'html_meta', wp_slash( $html_meta ) ) ) {
 							$info .= "Update OK for html_meta postmeta<br />";
 						} else {
-							$info .= "ERROR updating html_meta postmeta<br />";
+							//$info .= "ERROR updating html_meta postmeta<br />";
 						}
 						if ( update_post_meta( $post_id, 'html_stylesheet', wp_slash( $html_stylesheet ) ) ) {
 							$info .= "Update OK for html_stylesheet postmeta<br />";
 						} else {
-							$info .= "ERROR updating html_stylesheet postmeta<br />";
+							//$info .= "ERROR updating html_stylesheet postmeta<br />";
 						}
 						if ( update_post_meta( $post_id, 'html_css', wp_slash( $html_css ) ) ) {
 							$info .= "Update OK for html_css postmeta<br />";
 						} else {
-							$info .= "ERROR updating html_css postmeta<br />";
+							//$info .= "ERROR updating html_css postmeta<br />";
 						}
 						if ( update_post_meta( $post_id, 'html_content', wp_slash( $html_content ) ) ) {
 							$info .= "Update OK for html_content postmeta<br />";
 						} else {
-							$info .= "ERROR updating html_content postmeta<br />";
+							//$info .= "ERROR updating html_content postmeta<br />";
 						}					
 						if ( update_post_meta( $post_id, 'html_bk', wp_slash( $body ) ) ) {
 							$info .= "Update OK for html_bk postmeta<br />";
 						} else {
-							$info .= "ERROR updating html_bk postmeta<br />";
-						}
-						//$update_title = update_post_meta( $post_id, 'html_title', wp_slash( $html_title ) );
-						
+							//$info .= "ERROR updating html_bk postmeta<br />";
+						}						
 						
 					}
 			
