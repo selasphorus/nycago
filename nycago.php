@@ -438,9 +438,10 @@ function process_newsletters ( $atts = [] ) {
 							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
 						}
 						$info .= "<h4>header_links[1]:</h4>";
+						$html_stylesheet = "";
 						foreach ( $header_links[1] as $i => $tmp ) {
 							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
-							//$html_stylesheet .= $tmp;
+							$html_stylesheet .= $tmp;
 						}
 						/*foreach ( $links as $i => $tmp ) {
 							if (!empty($tmp)) { 
