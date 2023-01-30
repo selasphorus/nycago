@@ -471,7 +471,8 @@ function process_newsletters ( $atts = [] ) {
 						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br /><br />";
 						
 						// Run the post_meta updates
-						if ( update_post_meta( $post_id, 'html_last_modified', wp_slash( $html_last_modified ) ) ) {
+						if ( update_post_meta( $post_id, 'html_last_modified', $html_last_modified ) ) {
+						//if ( update_post_meta( $post_id, 'html_last_modified', wp_slash( $html_last_modified ) ) ) {
 							$info .= "Update OK for html_last_modified postmeta<br />";
 						}
 						if ( update_post_meta( $post_id, 'html_title', wp_slash( $html_title ) ) ) {
