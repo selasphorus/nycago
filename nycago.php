@@ -159,9 +159,7 @@ function process_newsletters ( $atts = [] ) {
 	$a = shortcode_atts( array(
         'testing' => true,
         'verbose' => false,
-        'do_images' => false,
-        'do_links' => false,
-        'do_content' => false,
+        'updates' => "all",
         'id' => null,
         'year' => date('Y'),
         'num_posts' => 10,
@@ -174,9 +172,11 @@ function process_newsletters ( $atts = [] ) {
     $testing = $a['testing'];
     $verbose = $a['verbose'];
     //
-    $do_images = $a['do_images'];
-    $do_links = $a['do_links'];
-    $do_content = $a['do_content'];
+    if ( $a['updates'] == "all" ) {
+    	$arr_updates = array('links', 'images', 'content', 'last_mod');
+    } else {
+    	$arr_updates = explode(", ",$a['updates']);
+    }
     //
     $num_posts = (int) $a['num_posts'];
     $year = get_query_var( 'y' );
@@ -217,7 +217,7 @@ function process_newsletters ( $atts = [] ) {
     
     $info .= ">>> process_newsletters <<<<br />";
     $info .= "testing: $testing; verbose: $verbose; orderby: $orderby; order: $order; meta_key: $meta_key;<br />";
-    $info .= "do_images: $do_images; do_links: $do_links; do_content: $do_content;<br />";
+    $info .= "updates: $updates;<br />";
     //$info .= "year: $year<br />";
     $info .= "[num posts: ".count($posts)."]<br />";
     //$info .= "args: <pre>".print_r( $args, true )."</pre>";
@@ -270,7 +270,7 @@ function process_newsletters ( $atts = [] ) {
 					$info .= "html_last_modified: ".$html_last_modified."<br />";
 					//$content_length = $headers['content-length'];
 					
-					if ( $do_links || $do_content ) { //
+					if ( in_array('links', $arr_updates) || in_array('content', $arr_updates) ) {
 						// Process all hyperlinks found in the post content
 						preg_match_all('/<.+href=[\'"]([^\'"]+)[\'"][^>]+>/i', $html_content, $links);
 						//$info .= "<h3>Links:</h3>";
@@ -292,7 +292,7 @@ function process_newsletters ( $atts = [] ) {
 						}
 					}
             		
-            		if ( $do_images || $do_content ) { //
+            		if ( in_array('images', $arr_updates) || in_array('content', $arr_updates) ) {
             			// Process all image tags found in the post content
 						preg_match_all('/<img.+src=[\'"][^\'"]+[\'"][^>]+>/i', $html_content, $images);
 						//$info .= "<h3>Images:</h3>";
@@ -390,7 +390,7 @@ function process_newsletters ( $atts = [] ) {
 									}
 								}
 							
-								if ( !empty($ml_img) && $do_content ) {
+								if ( !empty($ml_img) && in_array('content', $arr_updates) ) {
 									$ml_src = wp_get_attachment_image_url($ml_img, 'full');
 									// make it a relative link
 									$ml_src = str_replace("https://samb71.sg-host.com","",$ml_src);
@@ -401,13 +401,24 @@ function process_newsletters ( $atts = [] ) {
 							
 							}
 							
-							//if ( $do_images ) { $info .= $img_info; }
+							//if ( in_array('images', $arr_updates) ) { $info .= $img_info; }
 							//$info .= '</div>';
 							//$info .= "+++<br />";
 						}
             		}
             		
-    				if ( $do_content ) {
+            		// Run updates
+            		
+            		if ( in_array('last_mod', $arr_updates) ) {
+            			if ( update_post_meta( $post_id, 'html_last_modified', wp_slash( $html_last_modified ) ) ) {
+						//if ( update_post_meta( $post_id, 'html_last_modified', $html_last_modified ) ) {
+							$info .= "Update OK for html_last_modified postmeta<br />";
+						} else {
+							$info .= "No update for html_last_modified postmeta (post_id: $post_id; html_last_modified: $html_last_modified)<br />";
+						}
+            		}
+            		
+    				if ( in_array('content', $arr_updates) ) {
     				
 						// WIP -- Deal w/ anything that's not actually content/copy -- e.g. stylesheets
 						// <title
@@ -471,12 +482,7 @@ function process_newsletters ( $atts = [] ) {
 						//$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br /><br />";
 						
 						// Run the post_meta updates
-						if ( update_post_meta( $post_id, 'html_last_modified', wp_slash( $html_last_modified ) ) ) {
-						//if ( update_post_meta( $post_id, 'html_last_modified', $html_last_modified ) ) {
-							$info .= "Update OK for html_last_modified postmeta<br />";
-						} else {
-							//$info .= "ERROR updating html_last_modified postmeta<br />";
-						}
+						
 						if ( update_post_meta( $post_id, 'html_title', wp_slash( $html_title ) ) ) {
 							$info .= "Update OK for html_title postmeta<br />";
 						} else {
