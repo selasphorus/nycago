@@ -272,10 +272,10 @@ function process_newsletters ( $atts = [] ) {
 					if ( $do_links || $do_content ) { //
 						// Process all hyperlinks found in the post content
 						preg_match_all('/<.+href=[\'"]([^\'"]+)[\'"][^>]+>/i', $html_content, $links);
-						$info .= "<h3>Links:</h3>";
+						//$info .= "<h3>Links:</h3>";
 						foreach ( $links[1] as $link ) {
 					
-							$info .= "link: ".$link."<br />";
+							//$info .= "link: ".$link."<br />";
 						
 							preg_match('/http/', $link, $tmp);
 							if ( count($tmp) > 0 ) { 
@@ -283,7 +283,7 @@ function process_newsletters ( $atts = [] ) {
 								//$info .= "http found via preg_match (not a relative link)<br />";
 							} else {
 								$new_link = "http://www.nycago.org".$link;
-								$info .= ">> new_link: ".$new_link."<br />";
+								//$info .= ">> new_link: ".$new_link."<br />";
 								// Replace old link w/ new in body
 								$html_content = str_replace($link,$new_link,$html_content);
 							}
@@ -294,12 +294,11 @@ function process_newsletters ( $atts = [] ) {
             		if ( $do_images || $do_content ) { //
             			// Process all image tags found in the post content
 						preg_match_all('/<img.+src=[\'"][^\'"]+[\'"][^>]+>/i', $html_content, $images);
-						$info .= "<h3>Images:</h3>";
+						//$info .= "<h3>Images:</h3>";
 						foreach ( $images[0] as $img ) {
 						
-							$img_info = "";
-					
-							$info .= '<div class="smaller">';
+							$img_info = "";					
+							//$info .= '<div class="smaller">';
 						
 							// TODO: deal w/ width and height? probably not necessary. Any other attributes of concern?
 						
@@ -401,8 +400,8 @@ function process_newsletters ( $atts = [] ) {
 							
 							}
 							
-							if ( $do_images ) { $info .= $img_info; }
-							$info .= '</div>';
+							//if ( $do_images ) { $info .= $img_info; }
+							//$info .= '</div>';
 							//$info .= "+++<br />";
 						}
             		}
