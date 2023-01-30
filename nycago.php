@@ -425,30 +425,30 @@ function process_newsletters ( $atts = [] ) {
 						//$info .= "title: <code>".print_r($title,true)."</code><br />";
 						$info .= "<h4>title:</h4>";
 						foreach ( $title as $i => $tmp ) {
-							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
+							//$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
 						}
 						
 						//$info .= "meta: ".print_r($meta,true)."<br />";
 						$info .= "<h4>meta[0]:</h4>";
 						foreach ( $meta[0] as $i => $tmp ) {
-							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
+							//$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
 						}
 						$info .= "<h4>meta[1]:</h4>";
 						$html_meta = "";
 						foreach ( $meta[1] as $i => $tmp ) {
-							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
+							//$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
 							$html_meta .= $tmp."\n";
 						}
 						
 						$info .= "<h4>header_links[0]:</h4>";
 						//$info .= "links: ".print_r($links,true)."<br />";
 						foreach ( $header_links[0] as $i => $tmp ) {
-							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
+							//$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
 						}
 						$info .= "<h4>header_links[1]:</h4>";
 						$html_stylesheet = "";
 						foreach ( $header_links[1] as $i => $tmp ) {
-							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
+							//$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
 							$html_stylesheet .= $tmp."\n";
 						}
 						/*foreach ( $links as $i => $tmp ) {
