@@ -413,7 +413,7 @@ function process_newsletters ( $atts = [] ) {
 						// <title
 						preg_match('/<title>(.*)<\/title>/i', $html_content, $title);
 						$html_title = $title[1];
-						preg_match_all('/<meta[^>]+>/i', $html_content, $meta);
+						preg_match_all('/<meta([^>]+)>/i', $html_content, $meta);
 						preg_match_all('/<link.+href=[\'"]([^\'"]+)[\'"][^>]+>/i', $html_content, $header_links);
 						preg_match('/<style[^>]+>(.*?)<\/style>/is', $html_content, $css);
 						$html_css = $css[1];
