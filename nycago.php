@@ -287,7 +287,7 @@ function process_newsletters ( $atts = [] ) {
 								// Replace old link w/ new in body
 								$html_content = str_replace($link,$new_link,$html_content);
 							}
-							$info .= "---<br />";
+							//$info .= "---<br />";
 						}
 					}
             		
@@ -467,7 +467,7 @@ function process_newsletters ( $atts = [] ) {
 							//if (!empty($tmp)) { $info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />"; }
 						}
 						//$info .= $html_content;
-						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br /><br />";
+						//$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br /><br />";
 						
 						// Run the post_meta updates
 						//if ( update_post_meta( $post_id, 'html_last_modified', wp_slash( $html_last_modified ) ) ) {
