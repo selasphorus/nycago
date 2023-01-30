@@ -486,6 +486,9 @@ function process_newsletters ( $atts = [] ) {
 						if ( update_post_meta( $post_id, 'html_stylesheet', wp_slash( $html_stylesheet ) ) ) {
 							$info .= "Update OK for html_stylesheet postmeta<br />";
 						}
+						if ( update_post_meta( $post_id, 'html_meta', wp_slash( $html_meta ) ) ) {
+							$info .= "Update OK for html_meta postmeta<br />";
+						}
 						//$update_title = update_post_meta( $post_id, 'html_title', wp_slash( $html_title ) );
 						
 						
