@@ -417,27 +417,12 @@ function process_newsletters ( $atts = [] ) {
 						//preg_match_all('/<meta[^>]+>/i', $html_content, $meta);
 						// <link -- e.g. <link href="/styles/nycago.css" rel="stylesheet" type="text/css">
 						//preg_match_all('/<link[^>]+>/i', $html_content, $links);
-						preg_match_all('/<link.+href=[\'"]([^\'"]+)[\'"][^>]+>/i', $html_content, $header_links);
-						//html_links
+						preg_match_all('/<link.+href=[\'"]([^\'"]+)[\'"][^>]+>/i', $html_content, $header_links);						
 						// <style
 						preg_match('/<style[^>]+>(.*?)<\/style>/is', $html_content, $css);
 						$html_css = $css[1];
 						// <font
 						// etc???
-						
-						if ( update_post_meta( $post_id, 'html_bk', wp_slash( $body ) ) ) {
-							$info .= "Update OK for html_bk postmeta<br />";
-						}
-						if ( update_post_meta( $post_id, 'html_title', wp_slash( $html_title ) ) ) {
-							$info .= "Update OK for html_title postmeta<br />";
-						}
-						if ( update_post_meta( $post_id, 'html_content', wp_slash( $html_content ) ) ) {
-							$info .= "Update OK for html_content postmeta<br />";
-						}
-						if ( update_post_meta( $post_id, 'html_css', wp_slash( $html_css ) ) ) {
-							$info .= "Update OK for html_css postmeta<br />";
-						}
-						//$update_title = update_post_meta( $post_id, 'html_title', wp_slash( $html_title ) );
 						
 						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br />";
 						// TODO: figure out how to display HTML as code, not have tags act as tags
@@ -455,6 +440,7 @@ function process_newsletters ( $atts = [] ) {
 						$info .= "<h4>header_links[1]:</h4>";
 						foreach ( $header_links[1] as $i => $tmp ) {
 							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
+							//$html_stylesheet .= $tmp;
 						}
 						/*foreach ( $links as $i => $tmp ) {
 							if (!empty($tmp)) { 
@@ -474,6 +460,26 @@ function process_newsletters ( $atts = [] ) {
 						}
 						//$info .= $html_content;
 						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br /><br />";
+						
+						// Run the post_meta updates						
+						if ( update_post_meta( $post_id, 'html_bk', wp_slash( $body ) ) ) {
+							$info .= "Update OK for html_bk postmeta<br />";
+						}
+						if ( update_post_meta( $post_id, 'html_title', wp_slash( $html_title ) ) ) {
+							$info .= "Update OK for html_title postmeta<br />";
+						}
+						if ( update_post_meta( $post_id, 'html_content', wp_slash( $html_content ) ) ) {
+							$info .= "Update OK for html_content postmeta<br />";
+						}
+						if ( update_post_meta( $post_id, 'html_css', wp_slash( $html_css ) ) ) {
+							$info .= "Update OK for html_css postmeta<br />";
+						}
+						if ( update_post_meta( $post_id, 'html_stylesheet', wp_slash( $html_stylesheet ) ) ) {
+							$info .= "Update OK for html_stylesheet postmeta<br />";
+						}
+						//$update_title = update_post_meta( $post_id, 'html_title', wp_slash( $html_title ) );
+						
+						
 					}
 			
 				}			
