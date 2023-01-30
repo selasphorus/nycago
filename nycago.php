@@ -217,7 +217,7 @@ function process_newsletters ( $atts = [] ) {
     
     $info .= ">>> process_newsletters <<<<br />";
     $info .= "testing: $testing; verbose: $verbose; orderby: $orderby; order: $order; meta_key: $meta_key;<br />";
-    $info .= "updates: $updates;<br />";
+    $info .= "arr_updates: ".print_r($updates, true)."<br />";
     //$info .= "year: $year<br />";
     $info .= "[num posts: ".count($posts)."]<br />";
     //$info .= "args: <pre>".print_r( $args, true )."</pre>";
@@ -415,6 +415,8 @@ function process_newsletters ( $atts = [] ) {
 							$info .= "Update OK for html_last_modified postmeta<br />";
 						} else {
 							$info .= "No update for html_last_modified postmeta (post_id: $post_id; html_last_modified: $html_last_modified)<br />";
+							$last_mod = get_post_meta( $post_id, 'html_last_modified' );
+							$info .= "current value(s) for html_last_modified: ".print_r($last_mod,true)."<br />";
 						}
             		}
             		
