@@ -247,7 +247,7 @@ function process_newsletters ( $atts = [] ) {
 	
 			$info .= "url: ".$url."<br />";
 			$ext = pathinfo($url,PATHINFO_EXTENSION);
-			$info .= "ext: ".$ext."<br />";
+			//$info .= "ext: ".$ext."<br />";
 			
 			// TODO: check to make sure it's an AGO url before proceeding
 			
@@ -266,6 +266,7 @@ function process_newsletters ( $atts = [] ) {
 					//$info .= "<pre>".print_r($headers, true)."</pre>";
 					
 					$html_last_modified = $headers['last-modified'];
+					// TODO: figure out why this isn't getting saved properly to postmeta -- wrong format maybe?
 					$info .= "html_last_modified: ".$html_last_modified."<br />";
 					//$content_length = $headers['content-length'];
 					
