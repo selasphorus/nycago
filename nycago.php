@@ -265,8 +265,8 @@ function process_newsletters ( $atts = [] ) {
 					
 					//$info .= "<pre>".print_r($headers, true)."</pre>";
 					
-					$last_modified = $headers['last-modified'];
-					$info .= "last_modified: ".$last_modified."<br />";
+					$html_last_modified = $headers['last-modified'];
+					$info .= "html_last_modified: ".$html_last_modified."<br />";
 					//$content_length = $headers['content-length'];
 					
 					if ( $do_links || $do_content ) { //
@@ -437,7 +437,7 @@ function process_newsletters ( $atts = [] ) {
 						$html_meta = "";
 						foreach ( $meta[1] as $i => $tmp ) {
 							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
-							$html_meta .= $tmp;
+							$html_meta .= $tmp."\n";
 						}
 						
 						$info .= "<h4>header_links[0]:</h4>";
@@ -449,7 +449,7 @@ function process_newsletters ( $atts = [] ) {
 						$html_stylesheet = "";
 						foreach ( $header_links[1] as $i => $tmp ) {
 							$info .= "[$i] <code>".htmlspecialchars($tmp)."</code><br />";
-							$html_stylesheet .= $tmp;
+							$html_stylesheet .= $tmp."\n";
 						}
 						/*foreach ( $links as $i => $tmp ) {
 							if (!empty($tmp)) { 
@@ -470,24 +470,27 @@ function process_newsletters ( $atts = [] ) {
 						//$info .= $html_content;
 						$info .= "+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+~+<br /><br />";
 						
-						// Run the post_meta updates						
-						if ( update_post_meta( $post_id, 'html_bk', wp_slash( $body ) ) ) {
-							$info .= "Update OK for html_bk postmeta<br />";
+						// Run the post_meta updates
+						if ( update_post_meta( $post_id, 'html_last_modified', wp_slash( $html_last_modified ) ) ) {
+							$info .= "Update OK for html_last_modified postmeta<br />";
 						}
 						if ( update_post_meta( $post_id, 'html_title', wp_slash( $html_title ) ) ) {
 							$info .= "Update OK for html_title postmeta<br />";
 						}
-						if ( update_post_meta( $post_id, 'html_content', wp_slash( $html_content ) ) ) {
-							$info .= "Update OK for html_content postmeta<br />";
-						}
-						if ( update_post_meta( $post_id, 'html_css', wp_slash( $html_css ) ) ) {
-							$info .= "Update OK for html_css postmeta<br />";
+						if ( update_post_meta( $post_id, 'html_meta', wp_slash( $html_meta ) ) ) {
+							$info .= "Update OK for html_meta postmeta<br />";
 						}
 						if ( update_post_meta( $post_id, 'html_stylesheet', wp_slash( $html_stylesheet ) ) ) {
 							$info .= "Update OK for html_stylesheet postmeta<br />";
 						}
-						if ( update_post_meta( $post_id, 'html_meta', wp_slash( $html_meta ) ) ) {
-							$info .= "Update OK for html_meta postmeta<br />";
+						if ( update_post_meta( $post_id, 'html_css', wp_slash( $html_css ) ) ) {
+							$info .= "Update OK for html_css postmeta<br />";
+						}
+						if ( update_post_meta( $post_id, 'html_content', wp_slash( $html_content ) ) ) {
+							$info .= "Update OK for html_content postmeta<br />";
+						}					
+						if ( update_post_meta( $post_id, 'html_bk', wp_slash( $body ) ) ) {
+							$info .= "Update OK for html_bk postmeta<br />";
 						}
 						//$update_title = update_post_meta( $post_id, 'html_title', wp_slash( $html_title ) );
 						
