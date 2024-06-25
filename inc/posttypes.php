@@ -123,7 +123,7 @@ function nycago_register_post_type_organ() {
 	 	'menu_icon'          => 'dashicons-playlist-audio',
         'menu_position'      => null,
         'supports'           => array( 'title', 'author', 'thumbnail', 'editor', 'excerpt', 'custom-fields', 'revisions', 'page-attributes' ), //
-		'taxonomies' => array( 'action_type', 'organ_tag','admin_tag' ), //'people_category', 'people_tag', 
+		'taxonomies' => array( 'action_type', 'organ_tag', 'admin_tag' ), //'people_category', 'people_tag', 
 		'show_in_rest' => false, // i.e. false = use classic, not block editor
 	);
 
