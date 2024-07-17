@@ -115,7 +115,7 @@ function nycago_register_post_type_organ() {
         'show_ui'            => true,
         'show_in_menu'       => true,
         'query_var'          => true,
-        'rewrite'            => array( 'slug' => 'organ' ),
+        'rewrite'            => array( 'slug' => 'dborgans' ),
         'capability_type' => array('organ', 'organs'),
         'map_meta_cap'       => true,
         'has_archive'        => true,
